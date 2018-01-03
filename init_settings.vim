@@ -1,0 +1,76 @@
+" Misc
+set number
+set textwidth=120
+set formatoptions+=1
+set mouse=a
+set list
+set visualbell
+set lazyredraw
+set showmatch
+set matchtime=3
+set splitbelow
+set splitright
+set autowrite
+set autoread
+set shiftround
+set title
+set colorcolumn=+1
+set cmdheight=2
+set backup
+
+" Indents and Tabs
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set softtabstop=4
+
+" Allow pasting from OS clipboard with 'P'
+set clipboard+=unnamedplus
+
+" Time out on key codes but not mappings
+set notimeout
+set ttimeout
+set ttimeoutlen=10
+" Cancel out of a mapping manually and return to insert mode.
+inoremap <C-d> <esc>a
+
+" persistent undo
+if exists('+undofile')
+   set undofile
+endif
+
+set backupdir-=.
+
+call utils#EnsureExists(&undodir)
+call utils#EnsureExists(&backupdir)
+call utils#EnsureExists(&directory)
+
+" Do not show trailing whtite space in insert mode.
+augroup trailing
+    au!
+    au InsertEnter * :set listchars-=trail:⌴
+    au InsertLeave * :set listchars+=trail:⌴
+augroup END
+
+" Only show cursorline in the current window and in normal mode.
+augroup cline
+    au!
+    au WinLeave,InsertEnter * set nocursorline
+    au WinEnter,InsertLeave * set cursorline
+augroup END
+
+" Make sure Vim returns to the same line when you reopen a file.
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \     execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
+
+" Save when losing focus
+au FocusLost * :silent! wall
+
+" Resize splits when the window is resizer
+au VimResized * :wincmd =
