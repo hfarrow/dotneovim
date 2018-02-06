@@ -15,5 +15,6 @@ nnoremap <Leader>; :Files<CR>
 nnoremap <Leader>f :Ag 
 nnoremap <Leader>g :Tags<CR>
 nnoremap <Leader>m :Marks<CR>
+nnoremap <Leader>r :History<CR>
 nnoremap <Leader>h :History:<CR>
 nnoremap <Leader>/ :History/<CR>

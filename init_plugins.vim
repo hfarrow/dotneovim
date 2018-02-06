@@ -1,58 +1,40 @@
-set runtimepath+=/Users/farrh009/.local/share/dein/repos/github.com/Shougo/dein.vim
-
-call utils#Debug("loading dein plugin manager")
-
-" execute the call below if new plugins are not installing. If there is a script error below, it can cause issues.
-" :call dein#clear_state()
-" :call dein#recach_runtimepath()
-"
-if dein#load_state('/Users/farrh009/.local/share/dein')
-  call dein#begin('/Users/farrh009/.local/share/dein')
-
-  " Let dein manage dein
-  call dein#add('/Users/farrh009/.local/share/dein/repos/github.com/Shougo/dein.vim')
-
-  " Specify revision/branch/tag - Example:
-  " call dein#add('Shougo/deol.nvim', { 'rev': 'a1b5108fd' })
-
-  " Plugins {{{
-        " Sensible Basic Settings
-        call dein#add('tpope/vim-sensible')
-
-        " Core navigation, editing, and utilities
-        call dein#add('tpope/vim-repeat')
-        call dein#add('tpope/vim-unimpaired')
-        call dein#add('tpope/vim-surround')
-        call dein#add('tpope/vim-commentary')
-        call dein#add('easymotion/vim-easymotion')
-        call dein#add('scrooloose/nerdtree')
-        "TODO: enable easyclip when I have time to learn and configure it
-        "call #dein#add('svermeulen/vim-easyclip')
-
-        " Color Scheme
-        call dein#add('morhetz/gruvbox')
-
-        " Snippets
-        call dein#add('Shougo/neosnippet.vim')
-        call dein#add('Shougo/neosnippet-snippets')
-
-        " Find and Replace
-        call dein#add('junegunn/fzf', {'build': './install --all'})
-        call dein#add('junegunn/fzf.vim')
-  " }}} Plugins
-
-
-  call dein#end()
-  call dein#save_state()
+" Install vim-plug plugin manager
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+call utils#Debug('Initializing vim-plug plugin manager')
+call plug#begin('~/.local/share/nvim/plugged')
+
+       " Core navigation, editing, and utilities
+       Plug 'tpope/vim-repeat'
+       Plug 'tpope/vim-unimpaired'
+       Plug 'tpope/vim-surround'
+       Plug 'tpope/vim-commentary'
+       Plug 'easymotion/vim-easymotion'
+       Plug 'scrooloose/nerdtree'
+       " TODO: enable easyclip when I have time to learn and configure it
+       " Plug 'svermeulen/vim-easyclip'
+
+       " Color Scheme
+       Plug 'morhetz/gruvbox'
+
+       " Snippets
+       " Plug 'Shougo/neosnippet.vim'
+       " Plug 'Shougo/neosnippet-snippets'
+
+       " Find and Replace
+       Plug 'junegunn/fzf', {'do': './install --all'}
+       Plug 'junegunn/fzf.vim'
+
+       " JSON
+       Plug 'elzr/vim-json'
+
+call plug#end()
 
 filetype plugin indent on
 syntax enable
-
-" Install missing plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
 
 " Plugin customization and configuration
 call utils#ConfigurePlugins('plugin_configs/')

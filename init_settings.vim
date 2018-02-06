@@ -1,3 +1,6 @@
+" Allow sensible setting to be overriden. Normally they are sourced after init.vim.
+runtime! plugin/sensible.vim
+
 " Misc
 set number
 set textwidth=120
@@ -15,7 +18,7 @@ set autoread
 set shiftround
 set title
 set colorcolumn=+1
-set cmdheight=2
+" set cmdheight=2
 set backup
 
 " Indents and Tabs
@@ -32,6 +35,16 @@ set clipboard+=unnamedplus
 set notimeout
 set ttimeout
 set ttimeoutlen=10
+
+" Oni specific: Remove status bar because Oni has one built into the UI.
+if exists("g:gui_oni")
+    set noshowmode
+    set noruler
+    echom 'set laststatus=0'
+    set laststatus=0
+    set noshowcmd
+endif
+
 " Cancel out of a mapping manually and return to insert mode.
 inoremap <C-d> <esc>a
 
