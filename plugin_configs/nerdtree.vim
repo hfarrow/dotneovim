@@ -3,6 +3,7 @@ nnoremap <Leader>tt :NERDTreeToggle<CR>
 nnoremap <Leader>tu :NERDTree<Space>
 nnoremap <Leader>tr :NERDTreeCWD<CR>
 nnoremap <Leader>tf :NERDTreeFocus<CR>
+nnoremap <Leader>tf :NERDTreeFind<CR>
 
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1

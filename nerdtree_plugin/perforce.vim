@@ -77,5 +77,6 @@ endfunction
 
 function! NERDTree_perforceEnabled()
     " TODO: Need a fast (instant) way to determine if the the CWD or any parent has a .p4config
+    " On buffer enter, check async for .p4config and set an enabling flag to be checked here?
     return 1
 endfunction
