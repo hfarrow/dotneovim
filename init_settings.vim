@@ -36,6 +36,10 @@ set notimeout
 set ttimeout
 set ttimeoutlen=10
 
+" ignore case when searching unless there is at least one uppercase character
+set ignorecase
+set smartcase
+
 " Oni specific: Remove status bar because Oni has one built into the UI.
 if exists("g:gui_oni")
     set noshowmode

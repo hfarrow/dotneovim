@@ -7,29 +7,32 @@ endif
 call utils#Debug('Initializing vim-plug plugin manager')
 call plug#begin('~/.local/share/nvim/plugged')
 
-       " Core navigation, editing, and utilities
-       Plug 'tpope/vim-repeat'
-       Plug 'tpope/vim-unimpaired'
-       Plug 'tpope/vim-surround'
-       Plug 'tpope/vim-commentary'
-       Plug 'easymotion/vim-easymotion'
-       Plug 'scrooloose/nerdtree'
-       " TODO: enable easyclip when I have time to learn and configure it
-       " Plug 'svermeulen/vim-easyclip'
+        " Sensible Basic Settings
+        Plug 'tpope/vim-sensible'
 
-       " Color Scheme
-       Plug 'morhetz/gruvbox'
+        " Core navigation, editing, and utilities
+        Plug 'tpope/vim-repeat'
+        Plug 'tpope/vim-unimpaired'
+        Plug 'tpope/vim-surround'
+        Plug 'tpope/vim-commentary'
+        Plug 'easymotion/vim-easymotion'
+        Plug 'scrooloose/nerdtree'
+        " TODO: enable easyclip when I have time to learn and configure it
+        " Plug 'svermeulen/vim-easyclip'
 
-       " Snippets
-       " Plug 'Shougo/neosnippet.vim'
-       " Plug 'Shougo/neosnippet-snippets'
+        " Color Scheme
+        Plug 'morhetz/gruvbox'
 
-       " Find and Replace
-       Plug 'junegunn/fzf', {'do': './install --all'}
-       Plug 'junegunn/fzf.vim'
+        " Snippets
+        " Plug 'Shougo/neosnippet.vim'
+        " Plug 'Shougo/neosnippet-snippets'
 
-       " JSON
-       Plug 'elzr/vim-json'
+        " Find and Replace
+        Plug 'junegunn/fzf', {'do': './install --all'}
+        Plug 'junegunn/fzf.vim'
+
+        " JSON
+        Plug 'elzr/vim-json'
 
 call plug#end()
 
