@@ -1,11 +1,29 @@
-" Install vim-plug plugin manager
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" Install vim-plug plugin manager for unix based systems
+if has('win32')
+" TODO automatically install VimPlug for windows using the following PowerShell script:
+    "md ~\AppData\Local\nvim\autoload
+    "$uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    "(New-Object Net.WebClient).DownloadFile(
+    "  $uri,
+    "  $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
+    "    "~\AppData\Local\nvim\autoload\plug.vim"
+    "  )
+    ")
+" For now, run the above script manually then comment out init.vim. Run nvim and execute
+" :PlugInstall. Uncomment init.vim and restart nvim... there shouldn't be any errors.
+else
+    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+      silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
 endif
 
 call utils#Debug('Initializing vim-plug plugin manager')
-call plug#begin('~/.local/share/nvim/plugged')
+if has('win32')
+    call plug#begin('~/AppData/Local/nvim/autoload')
+else
+    call plug#begin('~/.local/share/nvim/plugged')
+endif
 
         " Sensible Basic Settings
         Plug 'tpope/vim-sensible'
