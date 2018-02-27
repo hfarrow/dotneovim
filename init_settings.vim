@@ -40,15 +40,6 @@ set ttimeoutlen=10
 set ignorecase
 set smartcase
 
-" Oni specific: Remove status bar because Oni has one built into the UI.
-if exists("g:gui_oni")
-    set noshowmode
-    set noruler
-    echom 'set laststatus=0'
-    set laststatus=0
-    set noshowcmd
-endif
-
 " Cancel out of a mapping manually and return to insert mode.
 inoremap <C-d> <esc>a
 
