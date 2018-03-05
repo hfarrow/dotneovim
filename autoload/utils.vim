@@ -1,4 +1,4 @@
-let s:debug = 1
+let s:debug = 0
 
 let g:nvim_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 let g:nvim_dir = resolve(g:nvim_dir . '/..')
