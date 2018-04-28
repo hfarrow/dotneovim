@@ -82,3 +82,6 @@ au FocusLost * :silent! wall
 
 " Resize splits when the window is resizer
 au VimResized * :wincmd =
+
+" Ensure accidently typing :W instead of :w will still save the buffer
+command! W write
