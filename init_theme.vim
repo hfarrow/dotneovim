@@ -13,7 +13,13 @@
 
 "set termguicolors
 
-let g:gruvbox_italic=1
+
+if has('win32')
+    let g:gruvbox_italic=0
+else
+    let g:gruvbox_italic=1
+endif
+
 let g:gruvbox_contrast_dark = 'medium'
 
 colorscheme gruvbox
