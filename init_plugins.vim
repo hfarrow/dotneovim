@@ -52,6 +52,17 @@ endif
         " JSON
         Plug 'elzr/vim-json'
 
+        " Auto Completion
+        Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+        " Programming Misc
+        Plug 'scrooloose/syntastic'
+
+        " Rust Programming Language
+        Plug 'rust-lang/rust.vim'
+        Plug 'sebastianmarkow/deoplete-rust'
+
+
 call plug#end()
 
 filetype plugin indent on

@@ -73,4 +73,3 @@ function! HiInterestingWord(n) " {{{
     " Move back to our original location.
     normal! `z
 endfunction " }}}
-

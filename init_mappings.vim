@@ -30,6 +30,7 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Split Windows
 nnoremap <leader>v <C-w>v<C-w>l
+nnoremap <leader>x :exec 'vnew <Bar> call termopen("bash") <Bar> startinsert' <CR>
 nnoremap <leader>s <C-w>s
 
 " Focus Window
@@ -75,3 +76,9 @@ nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
 " Terminal
 " Return to normal mode
 tnoremap <Esc> <C-\><C-n>
+
+" Change to directory of current file
+nnoremap <leader>cd :cd %:p:h <CR>
+
+" Map :W to :w because of common typo
+:command W w
