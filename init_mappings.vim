@@ -79,6 +79,3 @@ tnoremap <Esc> <C-\><C-n>
 
 " Change to directory of current file
 nnoremap <leader>cd :cd %:p:h <CR>
-
-" Map :W to :w because of common typo
-:command W w
