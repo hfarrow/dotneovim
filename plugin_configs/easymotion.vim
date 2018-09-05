@@ -6,7 +6,7 @@ let g:EasyMotion_smartcase = 1
 
 nmap <Space>s <Plug>(easymotion-sn)
 
-" Over windows
+" Over window
 nmap <Space><Space>w <Plug>(easymotion-overwin-w)
 nmap <Space><Space>s <Plug>(easymotion-overwin-f2)
 nmap <Space><Space>f <Plug>(easymotion-overwin-f)

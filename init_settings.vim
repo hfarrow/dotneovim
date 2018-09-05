@@ -14,7 +14,7 @@ set matchtime=3
 set splitbelow
 set splitright
 set autowrite
-set autoread
+set noautoread
 set shiftround
 set title
 set colorcolumn=+1
@@ -77,11 +77,20 @@ augroup line_return
         \ endif
 augroup END
 
-" Save when losing focus
-au FocusLost * :silent! wall
+augroup auto_read_write
+    " Save when losing focus
+    au FocusLost * :silent! wall
 
-" Resize splits when the window is resizer
+    " Reload when gaining foucs
+    au FocusGained * :silent! checktime
+    au BufEnter * :silent! checktime
+augroup END
+
+" Resize splits when the window is resized
 au VimResized * :wincmd =
 
 " Ensure accidently typing :W instead of :w will still save the buffer
 command! W write
+
+" Ensure accidently typing :Q instead of :w will still quit the buffer
+command! Q quit

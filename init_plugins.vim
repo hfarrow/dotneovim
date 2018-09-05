@@ -54,9 +54,15 @@ endif
 
         " Auto Completion
         Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+        Plug 'jiangmiao/auto-pairs'
+
+        " Git
+        Plug 'tpope/vim-fugitive'
+        Plug 'airblade/vim-gitgutter'
 
         " Programming Misc
         Plug 'scrooloose/syntastic'
+        Plug 'majutsushi/tagbar'
 
         " Rust Programming Language
         Plug 'rust-lang/rust.vim'

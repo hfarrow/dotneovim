@@ -15,11 +15,6 @@ nnoremap <silent> N Nzz
 
 " make * stay on current word
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
-nnoremap <silent> # #zz:PulseIfEnabled<cr>
-nnoremap <silent> g* g*zz:PulseIfEnabled<cr>
-nnoremap <silent> g# g#zz:PulseIfEnabled<cr>
-nnoremap <silent> <C-o> <C-o>zz:PulseIfEnabled<cr>
-nnoremap <silent> <C-i> <C-i>zz:PulseIfEnabled<cr>
 
 " reselect visual block after indent
 vnoremap < <gv
@@ -79,3 +74,6 @@ tnoremap <Esc> <C-\><C-n>
 
 " Change to directory of current file
 nnoremap <leader>cd :cd %:p:h <CR>
+
+" Break undo at line boundries and braces/paren/brackets
+inoremap <CR> <CR><C-G>u
