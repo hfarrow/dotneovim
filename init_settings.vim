@@ -43,6 +43,12 @@ set smartcase
 " Cancel out of a mapping manually and return to insert mode.
 inoremap <C-d> <esc>a
 
+" Use ag (silver searcher) for grep program
+if executable('ag')
+    set grepprg=ag\ --nogroup
+    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+endif
+
 " persistent undo
 if exists('+undofile')
    set undofile

@@ -7,7 +7,7 @@ noremap <silent> <cr> :noh<cr>:call clearmatches()<cr>
 " Leave insert mode
 inoremap jj <esc>
 inoremap jk <esc>
-inoremap kj <esc><Paste>
+inoremap kj <esc>
 
 " Auto Center
 nnoremap <silent> n nzz
@@ -46,6 +46,8 @@ vnoremap L g_
 " Replace Word Under Cursor
 nnoremap <space>c :%s/<C-r><C-w>//g<Left><Left>
 " TODO: Find and replace in all files
+
+nnoremap \ :Ag<Space>
 
 " make Y consistent with C and D. See :help Y.
 nnoremap Y y$

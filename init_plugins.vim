@@ -53,6 +53,7 @@ endif
         Plug 'elzr/vim-json'
 
         " Auto Completion
+        Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
         Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
         Plug 'jiangmiao/auto-pairs'
 
@@ -66,8 +67,6 @@ endif
 
         " Rust Programming Language
         Plug 'rust-lang/rust.vim'
-        Plug 'sebastianmarkow/deoplete-rust'
-
 
 call plug#end()
 
