@@ -52,6 +52,9 @@ endif
         " JSON
         Plug 'elzr/vim-json'
 
+        " XML
+        Plug 'othree/xml.vim'
+
         " Auto Completion
         Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
         Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
