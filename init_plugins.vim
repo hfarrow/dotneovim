@@ -1,16 +1,7 @@
 " Install vim-plug plugin manager for unix based systems
 if has('win32')
-" TODO automatically install VimPlug for windows using the following PowerShell script:
-    "md ~\AppData\Local\nvim\autoload
-    "$uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    "(New-Object Net.WebClient).DownloadFile(
-    "  $uri,
-    "  $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
-    "    "~\AppData\Local\nvim\autoload\plug.vim"
-    "  )
-    ")
-" For now, run the above script manually then comment out init.vim. Run nvim and execute
-" :PlugInstall. Uncomment init.vim and restart nvim... there shouldn't be any errors.
+" TODO run setup.ps1 to initialize VimPlug for windows
+" You may need to manually run :PlugInstall and there may be errors until you restart
 else
     if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
       silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -56,9 +47,18 @@ endif
         Plug 'othree/xml.vim'
 
         " Auto Completion
-        Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
+        if has('win32')
+            " 'do' command is untested on windows. Will it run the PowerShell script?
+            Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.ps1' }
+        else
+            Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
+        endif
         Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
         Plug 'jiangmiao/auto-pairs'
+
+        " Markdown / Notes
+        Plug 'shime/vim-livedown'
+        Plug 'vimwiki/vimwiki'
 
         " Git
         Plug 'tpope/vim-fugitive'

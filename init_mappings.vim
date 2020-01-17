@@ -79,3 +79,9 @@ nnoremap <leader>cd :cd %:p:h <CR>
 
 " Break undo at line boundries and braces/paren/brackets
 inoremap <CR> <CR><C-G>u
+
+" Move lines
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
