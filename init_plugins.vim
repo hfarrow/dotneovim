@@ -16,60 +16,83 @@ else
     call plug#begin('~/.local/share/nvim/plugged')
 endif
 
-        " Sensible Basic Settings
-        Plug 'tpope/vim-sensible'
+" Sensible Basic Settings
+Plug 'tpope/vim-sensible'
 
-        " Core navigation, editing, and utilities
-        Plug 'tpope/vim-repeat'
-        Plug 'tpope/vim-unimpaired'
-        Plug 'tpope/vim-surround'
-        Plug 'tpope/vim-commentary'
-        Plug 'easymotion/vim-easymotion'
-        Plug 'scrooloose/nerdtree'
-        " TODO: enable easyclip when I have time to learn and configure it
-        " Plug 'svermeulen/vim-easyclip'
+" Core navigation, editing, and utilities
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'asvetliakov/vim-easymotion'
+if !exists('g:vscode')
+    Plug 'scrooloose/nerdtree'
+endif
+" TODO: enable easyclip when I have time to learn and configure it
+" Plug 'svermeulen/vim-easyclip'
 
-        " Color Scheme
-        Plug 'morhetz/gruvbox'
+" Color Scheme
+if !exists('g:vscode')
+    Plug 'morhetz/gruvbox'
+endif
 
-        " Snippets
-        " Plug 'Shougo/neosnippet.vim'
-        " Plug 'Shougo/neosnippet-snippets'
+" Snippets
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 
-        " Find and Replace
-        Plug 'junegunn/fzf', {'do': './install --all'}
-        Plug 'junegunn/fzf.vim'
+" Find and Replace
+if !exists('g:vscode')
+    Plug 'junegunn/fzf', {'do': './install --all'}
+    Plug 'junegunn/fzf.vim'
+endif
 
-        " JSON
-        Plug 'elzr/vim-json'
+" JSON
+if !exists('g:vscode')
+    Plug 'elzr/vim-json'
+endif
 
-        " XML
-        Plug 'othree/xml.vim'
+" XML
+if !exists('g:vscode')
+    Plug 'othree/xml.vim'
+endif
 
-        " Auto Completion
-        if has('win32')
-            " 'do' command is untested on windows. Will it run the PowerShell script?
-            Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.ps1' }
-        else
-            Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
-        endif
-        Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-        Plug 'jiangmiao/auto-pairs'
+" Auto Completion
+if !exists('g:vscode')
+    if has('win32')
+        " 'do' command is untested on windows. Will it run the PowerShell script?
+        Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.ps1' }
+    else
+        Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
+    endif
+endif
 
-        " Markdown / Notes
-        Plug 'shime/vim-livedown'
-        Plug 'vimwiki/vimwiki'
+if !exists('g:vscode')
+    Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'jiangmiao/auto-pairs'
+endif
 
-        " Git
-        Plug 'tpope/vim-fugitive'
-        Plug 'airblade/vim-gitgutter'
+" Markdown / Notes
+if !exists('g:vscode')
+    Plug 'shime/vim-livedown'
+    Plug 'vimwiki/vimwiki'
+endif
 
-        " Programming Misc
-        Plug 'scrooloose/syntastic'
-        Plug 'majutsushi/tagbar'
+" Git
+if !exists('g:vscode')
+    Plug 'tpope/vim-fugitive'
+    Plug 'airblade/vim-gitgutter'
+endif
 
-        " Rust Programming Language
-        Plug 'rust-lang/rust.vim'
+" Programming Misc
+if !exists('g:vscode')
+    Plug 'scrooloose/syntastic'
+    Plug 'majutsushi/tagbar'
+endif
+
+" Rust Programming Language
+if !exists('g:vscode')
+    Plug 'rust-lang/rust.vim'
+endif
 
 call plug#end()
 
