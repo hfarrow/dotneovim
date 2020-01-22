@@ -71,6 +71,8 @@ nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
 nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
 
 " Terminal
+command Vterm :vnew | term
+
 " Return to normal mode
 tnoremap <Esc> <C-\><C-n>
 
