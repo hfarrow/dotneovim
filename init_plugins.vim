@@ -24,8 +24,10 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'asvetliakov/vim-easymotion'
-if !exists('g:vscode')
+if exists('g:vscode')
+    Plug 'asvetliakov/vim-easymotion', {'as': "vscode-vim-easymotion"}
+else
+    Plug 'easymotion/vim-easymotion'
     Plug 'scrooloose/nerdtree'
 endif
 " TODO: enable easyclip when I have time to learn and configure it
