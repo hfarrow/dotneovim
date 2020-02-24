@@ -24,75 +24,56 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+
 if exists('g:vscode')
-    Plug 'asvetliakov/vim-easymotion', {'as': "vscode-vim-easymotion"}
+    Plug 'asvetliakov/vim-easymotion', {'as': 'vscode-vim-easymotion'}
 else
-    Plug 'easymotion/vim-easymotion'
+    Plug 'easymotion/vim-easymotion', {'as': 'term-vim-easymoition'}
     Plug 'scrooloose/nerdtree'
-endif
-" TODO: enable easyclip when I have time to learn and configure it
-" Plug 'svermeulen/vim-easyclip'
+    " TODO: enable easyclip when I have time to learn and configure it
+    " Plug 'svermeulen/vim-easyclip'
 
-" Color Scheme
-if !exists('g:vscode')
+    " Color Scheme
     Plug 'morhetz/gruvbox'
-endif
 
-" Snippets
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
+    " Snippets
+    " Plug 'Shougo/neosnippet.vim'
+    " Plug 'Shougo/neosnippet-snippets'
 
-" Find and Replace
-if !exists('g:vscode')
+    " Find and Replace
     Plug 'junegunn/fzf', {'do': './install --all'}
     Plug 'junegunn/fzf.vim'
-endif
 
-" JSON
-if !exists('g:vscode')
+    " JSON
     Plug 'elzr/vim-json'
-endif
 
-" XML
-if !exists('g:vscode')
+    " XML
     Plug 'othree/xml.vim'
-endif
 
-" Auto Completion
-if !exists('g:vscode')
+    " Auto Completion
     if has('win32')
         " 'do' command is untested on windows. Will it run the PowerShell script?
         Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.ps1' }
     else
         Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
     endif
-endif
 
-if !exists('g:vscode')
     Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'jiangmiao/auto-pairs'
-endif
 
-" Markdown / Notes
-if !exists('g:vscode')
+    " Markdown / Notes
     Plug 'shime/vim-livedown'
     Plug 'vimwiki/vimwiki'
-endif
 
-" Git
-if !exists('g:vscode')
+    " Git
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
-endif
 
-" Programming Misc
-if !exists('g:vscode')
+    " Programming Misc
     Plug 'scrooloose/syntastic'
     Plug 'majutsushi/tagbar'
-endif
 
-" Rust Programming Language
-if !exists('g:vscode')
+    " Rust Programming Language
     Plug 'rust-lang/rust.vim'
 endif
 
