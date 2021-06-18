@@ -48,6 +48,7 @@ nnoremap <space>c :%s/<C-r><C-w>//g<Left><Left>
 " TODO: Find and replace in all files
 
 nnoremap \ :Ag<Space>
+nnoremap <C-\> :Ag<Space><C-r><C-w><cr>
 
 " make Y consistent with C and D. See :help Y.
 nnoremap Y y$
