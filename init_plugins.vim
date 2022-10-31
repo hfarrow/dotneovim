@@ -3,9 +3,19 @@ if has('win32')
 " TODO run setup.ps1 to initialize VimPlug for windows
 " You may need to manually run :PlugInstall and there may be errors until you restart
 else
-    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-      silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    let home_dir = $HOME
+    if(!empty($XDG_DATA_HOME))
+        let home_dir = $XDG_DATA_HOME
+    endif
+    let home_dir = home_dir . '/'
+
+    let install_path = home_dir . '.local/share/nvim/site/autoload/plug.vim'
+    let do_install = 0
+    if empty(glob(install_path))
+        call utils#Debug('Download vim-plug and installing to ' . install_path)
+        execute 'silent !curl -fLo ' . install_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        execute 'source ' . install_path
+        let do_install = 1
     endif
 endif
 
@@ -13,7 +23,7 @@ call utils#Debug('Initializing vim-plug plugin manager')
 if has('win32')
     call plug#begin('~/AppData/Local/nvim/autoload')
 else
-    call plug#begin('~/.local/share/nvim/plugged')
+    call plug#begin(home_dir . '.local/share/nvim/plugged')
 endif
 
 " Sensible Basic Settings
@@ -78,6 +88,11 @@ else
 endif
 
 call plug#end()
+
+" Install plugins if vim-plug was just installed
+if do_install == 1
+    execute 'PlugInstall --sync'
+endif
 
 filetype plugin indent on
 syntax enable
