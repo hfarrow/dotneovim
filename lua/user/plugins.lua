@@ -1,4 +1,4 @@
--- vim: foldmethod=marker foldlevel=0
+-- vim: foldmethod=marker foldlevel=1
 
 return function(use)
   -- {{{ Misc
@@ -39,6 +39,8 @@ return function(use)
 
   -- {{{ LSP
 
+  -- }}}
+
   -- {{{ Navigation
   use {'nvim-tree/nvim-tree.lua',
     requires = {
@@ -54,6 +56,45 @@ return function(use)
   --}}}
 
   -- {{{ Search
+  use {'nvim-telescope/telescope.nvim',
+    requires = {'nvim-lua/plenary.nvim'},
+    config = function()
+      require('telescope').setup{
+        defaults = {
+          cache_picker = {
+            num_pickers = 32
+          },
+          mappings = {
+            i = {
+              ['<C-J>'] = 'move_selection_next',
+              ['<C-K>'] = 'move_selection_previous',
+              [';']     = 'select_default',
+            },
+          },
+        },
+      }
+
+      local builtin = require('telescope/builtin')
+      local fn = require('user.functions')
+      fn.nbind('\'',         builtin.find_files)
+      fn.nbind(';',          builtin.oldfiles)
+      fn.nbind('<Leader>fg', builtin.live_grep)
+      fn.nbind('<Leader>*',  builtin.grep_string)
+      fn.nbind('<Leader>fb', builtin.buffers)
+      fn.nbind('<Leader>fh', builtin.help_tags)
+      fn.nbind('<Leader>fc', builtin.commands)
+      fn.nbind('<Leader>fr', builtin.pickers)
+      fn.nbind('<Leader>fm', builtin.marks)
+      fn.nbind('<Leader>fx', builtin.quickfix)
+      fn.nbind('<Leader>fz', builtin.quickfixhistory)
+      fn.nbind('<Leader>fo', builtin.vim_options)
+      fn.nbind('<Leader>fy', builtin.registers)
+      fn.nbind('<Leader>fe', builtin.resume)
+      fn.nbind('<Leader>/',  builtin.current_buffer_fuzzy_find)
+      fn.nbind('<Leader>fv', builtin.spell_suggest)
+    end
+  }
+
   use 'lfv89/vim-interestingwords'
   -- }}}
 
