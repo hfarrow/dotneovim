@@ -53,6 +53,55 @@ return function(use)
       fn.nbind('<Leader>tt', ':NvimTreeToggle<CR>')
     end,
   }
+
+  use {'glepnir/dashboard-nvim',
+    config = function()
+      local db = require('dashboard')
+      local home = os.getenv('HOME')
+      --db.preview_command = 'cat | lolcat -F 0.3'
+      --db.preview_file_path = home .. '/.config/nvim/static/neovim.cat'
+      --db.preview_file_height = 11
+      --db.preview_file_width = 70
+      db.custom_header = {
+        ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+        ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+        ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+        ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+        ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+        ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+      }
+      db.custom_center = {
+        {icon = '  ',
+        desc = 'Find File                               ',
+        action = 'Telescope find_files find_command=rg,--hidden,--files',
+        shortcut = 'SPC f f'},
+        {icon = '  ',
+        desc = 'Recent Files                            ',
+        action =  'Telescope oldfiles',
+        shortcut = 'SPC f r'},
+        {icon = '  ',
+        desc = 'Find Word                               ',
+        action = 'Telescope live_grep',
+        shortcut = 'SPC f g'},
+        {icon = '  ',
+        desc ='File Browser                            ',
+        action =  'NvimTreeToggle',
+        shortcut = 'SPC t t'},
+        {icon = '  ',
+        desc = 'Recent Sessions                                ',
+        shortcut = '',
+        action ='SessionLoad'},
+        {icon = '  ',
+        desc = 'Open Neovim Config                             ',
+        action = 'Telescope find_files cwd=' .. require('user.functions').get_dotneovim_path(),
+        shortcut = ''},
+        {icon = '  ',
+        desc = 'Open ~/.config                                 ',
+        action = 'Telescope find_files cwd=~/.config',
+        shortcut = ''},
+      }
+    end
+  }
   --}}}
 
   -- {{{ Search

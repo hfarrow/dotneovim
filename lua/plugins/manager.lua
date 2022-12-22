@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = {'plugins.lua', 'manager.lua'},
   callback = function (args)
     local fn = require('user.functions')
-    vim.api.nvim_command('source '..fn.get_dotfiles_path())
+    vim.api.nvim_command('source '..fn.get_dotneovim_path('lua/user/plugins.lua'))
     vim.api.nvim_command('source <afile>')
     vim.api.nvim_command('PackerCompile')
   end
