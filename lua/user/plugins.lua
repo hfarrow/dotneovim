@@ -42,7 +42,7 @@ return function(use)
   -- }}}
 
   -- {{{ Navigation
-  use {'nvim-tree/nvim-tree.lua',
+  use {'nvim-tree/nvim-tree.lua', tag = '0.1.0',
     requires = {
       'nvim-tree/nvim-web-devicons',
     },
@@ -50,7 +50,7 @@ return function(use)
     config = function()
       require("nvim-tree").setup({})
       local fn = require('user.functions')
-      fn.nbind('<Leader>rr', ':NvimTreeToggle<CR>')
+      fn.nbind('<Leader>tt', ':NvimTreeToggle<CR>')
     end,
   }
   --}}}
