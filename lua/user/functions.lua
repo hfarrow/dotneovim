@@ -15,6 +15,12 @@ local M = {
   nxbind = function(lhs, rhs, opts) vim.keymap.set({'n', 'x'}, lhs, rhs, opts) end,
 }
 
+function M.get_dotfiles_path()
+  local dotfile_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand('<sfile>:p')), ':h')
+  dotfile_path = vim.fn.resolve(dotfile_path..'/lua/user/plugins.lua')
+  return dotfile_path
+end
+
 function M.toggle_opt(prop, scope, on, off)
   if on == nil then
     on = true

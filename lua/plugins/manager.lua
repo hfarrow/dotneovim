@@ -1,7 +1,5 @@
 local fn = require('user.functions')
 local autocmd = fn.autocmd_helper('plugins_manager_cmds', {clear = true})
-local user_plugin_config = vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand('<sfile>:p')), ':h')
-user_plugin_config = vim.fn.resolve(user_plugin_config..'/lua/user/plugins.lua')
 
 local ensure_packer = function()
   local fn = vim.fn
@@ -20,7 +18,8 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   desc = 'Compile Packer on config save',
   pattern = {'plugins.lua', 'manager.lua'},
   callback = function (args)
-    vim.api.nvim_command('source '..user_plugin_config)
+    local fn = require('user.functions')
+    vim.api.nvim_command('source '..fn.get_dotfiles_path())
     vim.api.nvim_command('source <afile>')
     vim.api.nvim_command('PackerCompile')
   end
