@@ -1,7 +1,7 @@
 -- vim: foldmethod=marker foldlevel=1
 
 return function(use)
-  -- {{{ Misc
+  -- {{{ Core
   use 'tpope/vim-sensible'
   -- }}}
 
@@ -38,8 +38,113 @@ return function(use)
   -- }}}
 
   -- {{{ LSP
-  use {'neovim/nvim-lspconfig',
+  -- // TODO Diagnostics, Git, lua lsp
+  use {'neovim/nvim-lspconfig', commit = '3e2cc7061957292850cc386d9146f55458ae9fe3',
     config = function()
+    end
+  }
+
+  use {'hrsh7th/cmp-nvim-lsp',
+    config = function()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      local opts = { noremap=true, silent=true }
+      vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+      vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+      local on_attach = function(client, bufnr)
+        require('completion').on_attach(client)
+
+        -- Enable completion triggered by <c-x><c-o>
+        -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+        -- Mappings.
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
+        -- TODO: Move lsp mappings to function in keymaps.lua
+        local bufopts = { noremap=true, silent=true, buffer=bufnr }
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+        vim.keymap.set('n', '<space>wl', function()
+          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end, bufopts)
+        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+        vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+      end
+      -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+      --[[
+      require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+        capabilities = capabilities
+      }
+      --]]
+      -- TODO: Consider Omnisharp instead?
+      require('lspconfig').csharp_ls.setup({
+        capabilities = capabilities
+      })
+
+      require('lspconfig').bashls.setup({
+        capabilities = capabilities
+      })
+
+      require('lspconfig').rust_analyzer.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          ["rust-analyzer"] = {
+            imports = {
+              granularity = {
+                group = "module",
+              },
+              prefix = "self",
+            },
+            cargo = {
+              buildScripts = {
+                enable = true,
+              },
+            },
+            procMacro = {
+              enable = true
+            },
+          }
+        }
+      })
+
+      require('lspconfig').pyright.setup({
+        capabilities = capabilities
+      })
+
+      require('lspconfig').sumneko_lua.setup({
+        settings = {
+          Lua = {
+            runtime = {
+              -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+              version = 'LuaJIT',
+            },
+            diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = {'vim'},
+            },
+            workspace = {
+              -- Make the server aware of Neovim runtime files
+              library = vim.api.nvim_get_runtime_file('', true),
+              checkThirdParty = false,
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      })
     end
   }
   -- }}}
@@ -125,19 +230,8 @@ return function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-git'
+  use 'hrsh7th/cmp-nvim-lua'
   use 'saadparwaiz1/cmp_luasnip'
-
-  use {'hrsh7th/cmp-nvim-lsp',
-    config = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-      --[[
-      require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-        capabilities = capabilities
-      }
-      --]]
-    end
-  }
 
   use 'honza/vim-snippets'
   use {'L3MON4D3/LuaSnip', tag = 'v1.*',
@@ -149,11 +243,10 @@ return function(use)
   -- }}}
 
   -- {{{ Navigation
-  use {'nvim-tree/nvim-tree.lua', tag = '0.1.0',
+  use {'nvim-tree/nvim-tree.lua', tag = 'nightly',
     requires = {
       'nvim-tree/nvim-web-devicons',
     },
-    tag = 'nightly',
     config = function()
       require("nvim-tree").setup({})
       local fn = require('user.functions')
@@ -164,7 +257,6 @@ return function(use)
   use {'glepnir/dashboard-nvim',
     config = function()
       local db = require('dashboard')
-      local home = os.getenv('HOME')
       --db.preview_command = 'cat | lolcat -F 0.3'
       --db.preview_file_path = home .. '/.config/nvim/static/neovim.cat'
       --db.preview_file_height = 11
@@ -179,13 +271,13 @@ return function(use)
       }
       db.custom_center = {
         {icon = '  ',
-        desc = 'Find File                               ',
+        desc = 'Find File                                     ',
         action = 'Telescope find_files find_command=rg,--hidden,--files',
-        shortcut = 'SPC f f'},
+        shortcut = '\''},
         {icon = '  ',
-        desc = 'Recent Files                            ',
+        desc = 'Recent Files                                  ',
         action =  'Telescope oldfiles',
-        shortcut = 'SPC f r'},
+        shortcut = ';'},
         {icon = '  ',
         desc = 'Find Word                               ',
         action = 'Telescope live_grep',
@@ -265,5 +357,9 @@ return function(use)
   -- use 'luisiacc/gruvbox-baby'
   use 'sainnhe/gruvbox-material'
   -- }}}
+
+  -- {{{ Writing
+  -- }}}
+
 end
 
