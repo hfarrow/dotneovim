@@ -51,6 +51,7 @@ s.signcolumn = 'auto'
 s.visualbell = true
 s.title = true
 s.listchars:append('trail:⌴')
+s.signcolumn = 'yes'
 
 ------------------------------------------------------------------------------------------------------------------------
 -- Search

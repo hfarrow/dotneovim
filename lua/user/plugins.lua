@@ -228,9 +228,9 @@ return function(use)
   }
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-git'
   use 'hrsh7th/cmp-nvim-lua'
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'saadparwaiz1/cmp_luasnip'
 
   use 'honza/vim-snippets'
@@ -240,6 +240,24 @@ return function(use)
       require("luasnip.loaders.from_snipmate").lazy_load()
     end
   }
+
+  use {'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup({
+        disable_filetype = { "TelescopePrompt" , "vim" },
+      })
+
+      -- insert `(` after select function or method item
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      local cmp = require('cmp')
+      cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+      )
+
+    end
+}
+
   -- }}}
 
   -- {{{ Navigation
@@ -351,6 +369,41 @@ return function(use)
   }
 
   use 'lfv89/vim-interestingwords'
+
+  use {'petertriho/nvim-scrollbar',
+    config = function()
+      require('scrollbar').setup()
+    end
+  }
+
+  use {'kevinhwang91/nvim-hlslens',
+    config = function()
+      require('hlslens').setup()
+      require("scrollbar.handlers.search").setup({
+      })
+
+      local kopts = {noremap = true, silent = true}
+      local fn = require('user.functions')
+      fn.nbind('n',
+          [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+          kopts)
+      fn.nbind('N',
+          [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+          kopts)
+      fn.nbind('*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      fn.nbind('#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      fn.nbind('g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      fn.nbind('g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      fn.nbind('<Leader>l', '<Cmd>noh<CR>', kopts)
+    end,
+  }
+
+  use {'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+      require("scrollbar.handlers.gitsigns").setup()
+    end
+  }
   -- }}}
 
   -- {{{ Themes
