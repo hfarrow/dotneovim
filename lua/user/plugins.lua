@@ -346,6 +346,7 @@ return function(use)
       fn.nbind('<Leader>fe', builtin.resume)
       fn.nbind('<Leader>/',  builtin.current_buffer_fuzzy_find)
       fn.nbind('<Leader>fv', builtin.spell_suggest)
+      fn.nbind('<Leader>fj', builtin.jumplist)
     end
   }
 
