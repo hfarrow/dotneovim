@@ -48,31 +48,34 @@ return function(use)
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      local opts = { noremap=true, silent=true }
-      vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-      vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+      local diag_opts = { noremap=true, silent=true }
+      local fn = require('user.functions')
+      fn.nbind('<space>e', vim.diagnostic.open_float, diag_opts)
+      fn.nbind('[d', vim.diagnostic.goto_prev, diag_opts)
+      fn.nbind(']d', vim.diagnostic.goto_next, diag_opts)
+      fn.nbind('<space>q', vim.diagnostic.setloclist, diag_opts)
 
       local on_attach = function(client, bufnr)
         -- Mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local bufopts = { noremap=true, silent=true, buffer=bufnr }
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-        vim.keymap.set('n', '<Leader>gd', vim.lsp.buf.type_definition, bufopts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-        vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-        vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-        vim.keymap.set('n', '<Leader>wl', function()
+        local builtin = require('telescope/builtin')
+        local fn = require('user.functions')
+        local lsp_opts = { noremap=true, silent=true, buffer=bufnr }
+        fn.nbind('gD', vim.lsp.buf.declaration, lsp_opts)
+        fn.nbind('gd', builtin.lsp_definitions, lsp_opts)
+        fn.nbind('<Leader>gd', builtin.lsp_type_definitions, lsp_opts)
+        fn.nbind('gi', builtin.lsp_implementations, lsp_opts)
+        fn.nbind('gr', builtin.lsp_references, lsp_opts)
+        fn.nbind('K', vim.lsp.buf.hover, lsp_opts)
+        fn.nbind('<C-k>', vim.lsp.buf.signature_help, lsp_opts)
+        fn.nbind('<Leader>wa', vim.lsp.buf.add_workspace_folder, lsp_opts)
+        fn.nbind('<Leader>wr', vim.lsp.buf.remove_workspace_folder, lsp_opts)
+        fn.nbind('<Leader>wl', function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, bufopts)
-        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
-        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set('n', '<Leader>ff', function() vim.lsp.buf.format { async = true } end, bufopts)
+        end, lsp_opts)
+        fn.nbind('<Leader>rn', vim.lsp.buf.rename, lsp_opts)
+        fn.nbind('<Leader>ca', vim.lsp.buf.code_action, lsp_opts)
+        fn.nbind('<Leader>ff', function() vim.lsp.buf.format { async = true } end, lsp_opts)
       end
       -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
       --[[
