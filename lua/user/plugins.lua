@@ -13,9 +13,9 @@ return function(use)
       require("nvim-treesitter.configs").setup({
         ensure_installed = 'all',
         highlight = {
-          enable = false,
+          enable = true,
           -- disable slow treesitter highlight for large files
-          disable = function(lang, buf)
+          disable = function(_, buf)
               local max_filesize = 100 * 1024 -- 100 KB
               local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
               if ok and stats and stats.size > max_filesize then
@@ -55,30 +55,24 @@ return function(use)
       vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
       local on_attach = function(client, bufnr)
-        require('completion').on_attach(client)
-
-        -- Enable completion triggered by <c-x><c-o>
-        -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
         -- Mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        -- TODO: Move lsp mappings to function in keymaps.lua
         local bufopts = { noremap=true, silent=true, buffer=bufnr }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+        vim.keymap.set('n', '<Leader>gd', vim.lsp.buf.type_definition, bufopts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-        vim.keymap.set('n', '<space>wl', function()
+        vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+        vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+        vim.keymap.set('n', '<Leader>wl', function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, bufopts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-        vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
+        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
+        vim.keymap.set('n', '<Leader>ff', function() vim.lsp.buf.format { async = true } end, bufopts)
       end
       -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
       --[[
@@ -88,11 +82,13 @@ return function(use)
       --]]
       -- TODO: Consider Omnisharp instead?
       require('lspconfig').csharp_ls.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       require('lspconfig').bashls.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       require('lspconfig').rust_analyzer.setup({
@@ -119,10 +115,13 @@ return function(use)
       })
 
       require('lspconfig').pyright.setup({
-        capabilities = capabilities
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       require('lspconfig').sumneko_lua.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
         settings = {
           Lua = {
             runtime = {
@@ -227,6 +226,7 @@ return function(use)
     end
   }
   use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-git'
   use 'hrsh7th/cmp-nvim-lua'
@@ -370,9 +370,13 @@ return function(use)
       fn.nbind('<Leader>/',  builtin.current_buffer_fuzzy_find)
       fn.nbind('<Leader>fv', builtin.spell_suggest)
       fn.nbind('<Leader>fj', builtin.jumplist)
+      fn.nbind('<Leader>f<Leader>', builtin.keymaps)
     end
   }
 
+  -- }}}
+
+  -- {{{ Display
   use 'lfv89/vim-interestingwords'
 
   use {'petertriho/nvim-scrollbar',
@@ -390,11 +394,11 @@ return function(use)
       local kopts = {noremap = true, silent = true}
       local fn = require('user.functions')
       fn.nbind('n',
-          [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-          kopts)
+        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        kopts)
       fn.nbind('N',
-          [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-          kopts)
+        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        kopts)
       fn.nbind('*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       fn.nbind('#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       fn.nbind('g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
