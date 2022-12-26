@@ -479,6 +479,21 @@ return function(use)
   -- }}}
 
   -- {{{ Writing
+  use {'ellisonleao/glow.nvim',
+    config = function ()
+      require('glow').setup({
+        glow_path = '/usr/bin/glow',
+        install_path = "~/.local/bin",
+        border = "shadow",
+        style = "dark",
+        pager = false,
+        width = 120,
+        height = 1000,
+        width_ratio = 0.7, -- maximum width of the Glow window compared to the nvim window size (overrides `width`)
+        height_ratio = 0.9,
+      })
+    end
+  }
   -- }}}
 
 end
