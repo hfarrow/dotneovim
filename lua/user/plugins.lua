@@ -331,6 +331,7 @@ return function(use)
   use {'nvim-telescope/telescope.nvim',
     requires = {'nvim-lua/plenary.nvim'},
     config = function()
+      local trouble = require("trouble.providers.telescope")
       require('telescope').setup{
         defaults = {
           cache_picker = {
@@ -341,6 +342,10 @@ return function(use)
               ['<C-J>'] = 'move_selection_next',
               ['<C-K>'] = 'move_selection_previous',
               [';']     = 'select_default',
+              ["<c-t>"] = trouble.open_with_trouble,
+            },
+            n = {
+              ["<c-t>"] = trouble.open_with_trouble
             },
           },
         },
@@ -402,6 +407,46 @@ return function(use)
     config = function()
       require('gitsigns').setup()
       require("scrollbar.handlers.gitsigns").setup()
+    end
+  }
+
+  use {'folke/trouble.nvim',
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup({})
+
+      -- Trouble was not changing the gutter column icons
+      local signs = {
+          Error = " ",
+          Warn = " ",
+          Hint = " ",
+          Information = " "
+      }
+      for type, icon in pairs(signs) do
+          local hl = "DiagnosticSign" .. type
+          vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
+      end
+
+      -- TODO Cleanup, use fn.nbind and opt arg
+      -- TODO Update binding because space x is used
+      vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+        {silent = true, noremap = true}
+      )
     end
   }
   -- }}}
