@@ -1,9 +1,9 @@
 local M = {
   bind = vim.keymap.set,
   bind_opt = {
-    remap = {remap = true},
-    silent = {silent = true},
-    expr = {expr = true},
+    remap = { remap = true },
+    silent = { silent = true },
+    expr = { expr = true },
   },
   nbind = function(lhs, rhs, opts)
     vim.keymap.set('n', lhs, rhs, opts)
@@ -12,7 +12,7 @@ local M = {
   ibind = function(lhs, rhs, opts) vim.keymap.set('i', lhs, rhs, opts) end,
   xbind = function(lhs, rhs, opts) vim.keymap.set('x', lhs, rhs, opts) end,
   tbind = function(lhs, rhs, opts) vim.keymap.set('t', lhs, rhs, opts) end,
-  nxbind = function(lhs, rhs, opts) vim.keymap.set({'n', 'x'}, lhs, rhs, opts) end,
+  nxbind = function(lhs, rhs, opts) vim.keymap.set({ 'n', 'x' }, lhs, rhs, opts) end,
 }
 
 function M.get_dotneovim_path(file)
@@ -33,7 +33,7 @@ function M.toggle_opt(prop, scope, on, off)
 
   if scope == nil then
     scope = 'o'
- end
+  end
 
   return function()
     if vim[scope][prop] == on then
@@ -50,9 +50,9 @@ function M.autocmd_helper(augroup, options)
   end
   return function(events, options)
     if type(events) ~= 'table' then
-      events = {events}
+      events = { events }
     end
-    if(options.pattern == nil) then
+    if (options.pattern == nil) then
       options.pattern = '*'
     end
     vim.api.nvim_create_autocmd(events, {

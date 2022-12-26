@@ -1,7 +1,7 @@
 local env = require('user.env')
 local fn = require('user.functions')
 local s = vim.opt
-local autocmd = fn.autocmd_helper('settings_cmds', {clear = true})
+local autocmd = fn.autocmd_helper('settings_cmds', { clear = true })
 
 -- Allow sensible setting to be overriden
 -- Normally they are sourced after init.vim.
@@ -25,7 +25,7 @@ vim.g.mapleader = ' '
 ------------------------------------------------------------------------------------------------------------------------
 --Don't break line after 1 letter word; break before if possible
 s.textwidth = 120
-s.formatoptions:append('1')  -- don't break a line after a one-letter word, break before if possible
+s.formatoptions:append('1') -- don't break a line after a one-letter word, break before if possible
 -- TODO auto formatting comments was too strict. For example, in lua, I could not add a space after '--' and it was
 -- making banners hard to edit. Maybe it can be per file type?
 --s.formatoptions:append('ac') -- only autoformat comments
@@ -74,7 +74,7 @@ s.splitbelow = true
 s.mouse = 'a'
 
 -- Insert mode completion setting
-s.completeopt = {'menu', 'menuone'}
+s.completeopt = { 'menu', 'menuone' }
 
 s.errorformat:append('%f:%l:%c%p%m')
 s.autowrite = true
@@ -106,11 +106,11 @@ autocmd('InsertLeave', {
   command = ':set listchars+=trail:⌴'
 })
 
-autocmd({'WinLeave', 'InsertEnter'}, {
+autocmd({ 'WinLeave', 'InsertEnter' }, {
   desc = 'Hide cursor line in insert mode',
   command = 'set nocursorline'
 })
-autocmd({'WinEnter', 'InsertLeave'}, {
+autocmd({ 'WinEnter', 'InsertLeave' }, {
   desc = 'Show cursor line outside insert mode',
   command = 'set cursorline'
 })
@@ -131,7 +131,7 @@ autocmd('FocusLost', {
   command = ':silent! wall'
 })
 
-autocmd({'FocusGained', 'BufEnter'}, {
+autocmd({ 'FocusGained', 'BufEnter' }, {
   desc = 'Reload when gaining focus',
   command = ':silent! checktime'
 })

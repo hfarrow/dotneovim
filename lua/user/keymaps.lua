@@ -1,9 +1,7 @@
 local fn = require('user.functions')
 
 -- Helpers
-local remap = fn.bind_opt.remap
 local silent = fn.bind_opt.silent
-local expr = fn.bind_opt.expr
 
 ------------------------------------------------------------------------------------------------------------------------
 -- Key Mappings

@@ -8,8 +8,8 @@ return function(use)
   -- }}}
 
   -- {{{ Syntax
-  use {'nvim-treesitter/nvim-treesitter',
-    requires = {'p00f/nvim-ts-rainbow'},
+  use { 'nvim-treesitter/nvim-treesitter',
+    requires = { 'p00f/nvim-ts-rainbow' },
     run = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
@@ -18,11 +18,11 @@ return function(use)
           enable = true,
           -- disable slow treesitter highlight for large files
           disable = function(_, buf)
-              local max_filesize = 100 * 1024 -- 100 KB
-              local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-              if ok and stats and stats.size > max_filesize then
-                  return true
-              end
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+              return true
+            end
           end,
         },
         indent = {
@@ -40,19 +40,19 @@ return function(use)
   -- }}}
 
   -- {{{ LSP
-  use {'neovim/nvim-lspconfig', commit = '3e2cc7061957292850cc386d9146f55458ae9fe3',
+  use { 'neovim/nvim-lspconfig', commit = '3e2cc7061957292850cc386d9146f55458ae9fe3',
     config = function()
     end
   }
 
-  use {'hrsh7th/cmp-nvim-lsp',
+  use { 'hrsh7th/cmp-nvim-lsp',
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      local diag_opts = { noremap=true, silent=true }
+      local diag_opts = { noremap = true, silent = true }
       local fn = require('user.functions')
-      fn.nbind('[x', function() vim.diagnostic.goto_prev({float = false}) end, diag_opts)
-      fn.nbind(']x', function() vim.diagnostic.goto_next({float = false}) end, diag_opts)
+      fn.nbind('[x', function() vim.diagnostic.goto_prev({ float = false }) end, diag_opts)
+      fn.nbind(']x', function() vim.diagnostic.goto_next({ float = false }) end, diag_opts)
       fn.nbind('<space>q', vim.diagnostic.setloclist, diag_opts)
 
       local on_attach = function(client, bufnr)
@@ -60,7 +60,7 @@ return function(use)
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local builtin = require('telescope/builtin')
         local fn = require('user.functions')
-        local lsp_opts = { noremap=true, silent=true, buffer=bufnr }
+        local lsp_opts = { noremap = true, silent = true, buffer = bufnr }
         fn.nbind('gD', vim.lsp.buf.declaration, lsp_opts)
         fn.nbind('gd', builtin.lsp_definitions, lsp_opts)
         fn.nbind('<Leader>gd', builtin.lsp_type_definitions, lsp_opts)
@@ -133,7 +133,7 @@ return function(use)
             },
             diagnostics = {
               -- Get the language server to recognize the `vim` global
-              globals = {'vim'},
+              globals = { 'vim' },
             },
             workspace = {
               -- Make the server aware of Neovim runtime files
@@ -152,7 +152,7 @@ return function(use)
   -- }}}
 
   -- {{{ Completion
-  use {'hrsh7th/nvim-cmp',
+  use { 'hrsh7th/nvim-cmp',
     config = function()
       vim.opt.completeopt = 'menu,menuone,noselect'
       local has_words_before = function()
@@ -166,7 +166,7 @@ return function(use)
       cmp.setup({
         snippet = {
           expand = function(args)
-            require'luasnip'.lsp_expand(args.body)
+            require 'luasnip'.lsp_expand(args.body)
           end
         },
 
@@ -237,17 +237,17 @@ return function(use)
   use 'saadparwaiz1/cmp_luasnip'
 
   use 'honza/vim-snippets'
-  use {'L3MON4D3/LuaSnip', tag = 'v1.*',
+  use { 'L3MON4D3/LuaSnip', tag = 'v1.*',
     run = 'make install_jsregexp',
     config = function()
       require("luasnip.loaders.from_snipmate").lazy_load()
     end
   }
 
-  use {'windwp/nvim-autopairs',
+  use { 'windwp/nvim-autopairs',
     config = function()
       require('nvim-autopairs').setup({
-        disable_filetype = { "TelescopePrompt" , "vim" },
+        disable_filetype = { "TelescopePrompt", "vim" },
       })
 
       -- insert `(` after select function or method item
@@ -259,12 +259,12 @@ return function(use)
       )
 
     end
-}
+  }
 
   -- }}}
 
   -- {{{ Navigation
-  use {'nvim-tree/nvim-tree.lua', tag = 'nightly',
+  use { 'nvim-tree/nvim-tree.lua', tag = 'nightly',
     requires = {
       'nvim-tree/nvim-web-devicons',
     },
@@ -275,7 +275,7 @@ return function(use)
     end,
   }
 
-  use {'glepnir/dashboard-nvim',
+  use { 'glepnir/dashboard-nvim',
     config = function()
       local db = require('dashboard')
       --db.preview_command = 'cat | lolcat -F 0.3'
@@ -291,39 +291,39 @@ return function(use)
         ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
       }
       db.custom_center = {
-        {icon = '  ',
-        desc = 'Find File                                     ',
-        action = 'Telescope find_files find_command=rg,--hidden,--files',
-        shortcut = '\''},
-        {icon = '  ',
-        desc = 'Recent Files                                  ',
-        action =  'Telescope oldfiles',
-        shortcut = ';'},
-        {icon = '  ',
-        desc = 'Find Word                               ',
-        action = 'Telescope live_grep',
-        shortcut = 'SPC f g'},
-        {icon = '  ',
-        desc ='File Browser                            ',
-        action =  'NvimTreeToggle',
-        shortcut = 'SPC t t'},
-        {icon = '  ',
-        desc = 'Recent Sessions                                ',
-        shortcut = '',
-        action ='SessionLoad'},
-        {icon = '  ',
-        desc = 'Open Neovim Config                             ',
-        action = 'Telescope find_files cwd=' .. require('user.functions').get_dotneovim_path(),
-        shortcut = ''},
-        {icon = '  ',
-        desc = 'Open ~/.config                                 ',
-        action = 'Telescope find_files cwd=~/.config',
-        shortcut = ''},
+        { icon = '  ',
+          desc = 'Find File                                     ',
+          action = 'Telescope find_files find_command=rg,--hidden,--files',
+          shortcut = '\'' },
+        { icon = '  ',
+          desc = 'Recent Files                                  ',
+          action = 'Telescope oldfiles',
+          shortcut = ';' },
+        { icon = '  ',
+          desc = 'Find Word                               ',
+          action = 'Telescope live_grep',
+          shortcut = 'SPC f g' },
+        { icon = '  ',
+          desc = 'File Browser                            ',
+          action = 'NvimTreeToggle',
+          shortcut = 'SPC t t' },
+        { icon = '  ',
+          desc = 'Recent Sessions                                ',
+          shortcut = '',
+          action = 'SessionLoad' },
+        { icon = '  ',
+          desc = 'Open Neovim Config                             ',
+          action = 'Telescope find_files cwd=' .. require('user.functions').get_dotneovim_path(),
+          shortcut = '' },
+        { icon = '  ',
+          desc = 'Open ~/.config                                 ',
+          action = 'Telescope find_files cwd=~/.config',
+          shortcut = '' },
       }
     end
   }
 
-  use {'ggandor/leap.nvim',
+  use { 'ggandor/leap.nvim',
     config = function()
       require('leap').add_default_mappings()
     end
@@ -331,11 +331,11 @@ return function(use)
   --}}}
 
   -- {{{ Search
-  use {'nvim-telescope/telescope.nvim',
-    requires = {'nvim-lua/plenary.nvim'},
+  use { 'nvim-telescope/telescope.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
     config = function()
       local trouble = require("trouble.providers.telescope")
-      require('telescope').setup{
+      require('telescope').setup {
         defaults = {
           cache_picker = {
             num_pickers = 32
@@ -356,10 +356,10 @@ return function(use)
 
       local builtin = require('telescope/builtin')
       local fn = require('user.functions')
-      fn.nbind('\'',         builtin.find_files)
-      fn.nbind(';',          builtin.oldfiles)
+      fn.nbind('\'', builtin.find_files)
+      fn.nbind(';', builtin.oldfiles)
       fn.nbind('<Leader>fg', builtin.live_grep)
-      fn.nbind('<Leader>*',  builtin.grep_string)
+      fn.nbind('<Leader>*', builtin.grep_string)
       fn.nbind('<Leader>fb', builtin.buffers)
       fn.nbind('<Leader>fh', builtin.help_tags)
       fn.nbind('<Leader>fc', builtin.commands)
@@ -370,7 +370,7 @@ return function(use)
       fn.nbind('<Leader>fo', builtin.vim_options)
       fn.nbind('<Leader>fy', builtin.registers)
       fn.nbind('<Leader>fe', builtin.resume)
-      fn.nbind('<Leader>/',  builtin.current_buffer_fuzzy_find)
+      fn.nbind('<Leader>/', builtin.current_buffer_fuzzy_find)
       fn.nbind('<Leader>fv', builtin.spell_suggest)
       fn.nbind('<Leader>fj', builtin.jumplist)
       fn.nbind('<Leader>f<Leader>', builtin.keymaps)
@@ -382,19 +382,19 @@ return function(use)
   -- {{{ Display and Diagnostics
   use 'lfv89/vim-interestingwords'
 
-  use {'petertriho/nvim-scrollbar',
+  use { 'petertriho/nvim-scrollbar',
     config = function()
       require('scrollbar').setup()
     end
   }
 
-  use {'kevinhwang91/nvim-hlslens',
+  use { 'kevinhwang91/nvim-hlslens',
     config = function()
       require('hlslens').setup()
       require("scrollbar.handlers.search").setup({
       })
 
-      local kopts = {noremap = true, silent = true}
+      local kopts = { noremap = true, silent = true }
       local fn = require('user.functions')
       fn.nbind('n',
         [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
@@ -410,55 +410,43 @@ return function(use)
     end,
   }
 
-  use {'lewis6991/gitsigns.nvim',
+  use { 'lewis6991/gitsigns.nvim',
     config = function()
       require('gitsigns').setup()
       require("scrollbar.handlers.gitsigns").setup()
     end
   }
 
-  use {'folke/trouble.nvim',
+  use { 'folke/trouble.nvim',
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
-      require("trouble").setup({})
+      require('trouble').setup({})
 
-      -- Trouble was not changing the gutter column icons
+      -- Set signs for gutter manually because Trouble was not doing so. Might be specific to newer versions of Vim and
+      -- older versions of Trouble
       local signs = {
-          Error = " ",
-          Warn = " ",
-          Hint = " ",
-          Information = " "
+        Error = " ",
+        Warn = " ",
+        Hint = " ",
+        Information = " "
       }
       for type, icon in pairs(signs) do
-          local hl = "DiagnosticSign" .. type
-          vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
       end
 
-      -- TODO Cleanup, use fn.nbind and opt arg
-      -- TODO Update binding because space x is used
-      vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
-        {silent = true, noremap = true}
-      )
-      vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-        {silent = true, noremap = true}
-      )
-      vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
-        {silent = true, noremap = true}
-      )
-      vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
-        {silent = true, noremap = true}
-      )
-      vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
-        {silent = true, noremap = true}
-      )
-      vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
-        {silent = true, noremap = true}
-      )
+      local fn = require('user.functions')
+      local opts = fn.bind_opt.silent
+      fn.nbind("<leader>xx", "<cmd>TroubleToggle<cr>", opts)
+      fn.nbind("<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
+      fn.nbind("<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", opts)
+      fn.nbind("<leader>xl", "<cmd>TroubleToggle loclist<cr>", opts)
+      fn.nbind("<leader>xq", "<cmd>TroubleToggle quickfix<cr>", opts)
+      fn.nbind("gR", "<cmd>TroubleToggle lsp_references<cr>", opts)
     end
   }
 
-  use({
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  use { "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
       require("lsp_lines").setup()
       vim.diagnostic.config({
@@ -468,12 +456,12 @@ return function(use)
       vim.keymap.set("n", "<Leader>ux",
         function()
           require("lsp_lines").toggle()
-          vim.diagnostic.config({virtual_text = not lsp_lines_active})
+          vim.diagnostic.config({ virtual_text = not lsp_lines_active })
           lsp_lines_active = not lsp_lines_active
         end,
         { desc = "Toggle lsp_lines" })
     end,
-  })
+  }
   -- }}}
 
   -- {{{ Themes
@@ -486,4 +474,3 @@ return function(use)
   -- }}}
 
 end
-
