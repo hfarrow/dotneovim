@@ -1,5 +1,7 @@
 -- vim: foldmethod=marker foldlevel=1
 
+local lsp_lines_active = true
+
 return function(use)
   -- {{{ Core
   use 'tpope/vim-sensible'
@@ -38,7 +40,6 @@ return function(use)
   -- }}}
 
   -- {{{ LSP
-  -- // TODO Diagnostics, Git, lua lsp
   use {'neovim/nvim-lspconfig', commit = '3e2cc7061957292850cc386d9146f55458ae9fe3',
     config = function()
     end
@@ -50,13 +51,12 @@ return function(use)
 
       local diag_opts = { noremap=true, silent=true }
       local fn = require('user.functions')
-      fn.nbind('<space>e', vim.diagnostic.open_float, diag_opts)
-      fn.nbind('[d', vim.diagnostic.goto_prev, diag_opts)
-      fn.nbind(']d', vim.diagnostic.goto_next, diag_opts)
+      fn.nbind('[x', function() vim.diagnostic.goto_prev({float = false}) end, diag_opts)
+      fn.nbind(']x', function() vim.diagnostic.goto_next({float = false}) end, diag_opts)
       fn.nbind('<space>q', vim.diagnostic.setloclist, diag_opts)
 
       local on_attach = function(client, bufnr)
-        -- Mappings.
+        -- Mappings
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local builtin = require('telescope/builtin')
         local fn = require('user.functions')
@@ -379,7 +379,7 @@ return function(use)
 
   -- }}}
 
-  -- {{{ Display
+  -- {{{ Display and Diagnostics
   use 'lfv89/vim-interestingwords'
 
   use {'petertriho/nvim-scrollbar',
@@ -456,6 +456,24 @@ return function(use)
       )
     end
   }
+
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+      vim.diagnostic.config({
+        virtual_text = false,
+      })
+
+      vim.keymap.set("n", "<Leader>ux",
+        function()
+          require("lsp_lines").toggle()
+          vim.diagnostic.config({virtual_text = not lsp_lines_active})
+          lsp_lines_active = not lsp_lines_active
+        end,
+        { desc = "Toggle lsp_lines" })
+    end,
+  })
   -- }}}
 
   -- {{{ Themes
