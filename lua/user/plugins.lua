@@ -1,6 +1,7 @@
 -- vim: foldmethod=marker foldlevel=1
 
 local lsp_lines_active = true
+local lsp_only_current_line = false
 
 return function(use)
   -- {{{ Core
@@ -453,13 +454,20 @@ return function(use)
         virtual_text = false,
       })
 
-      vim.keymap.set("n", "<Leader>ux",
-        function()
-          require("lsp_lines").toggle()
-          vim.diagnostic.config({ virtual_text = not lsp_lines_active })
-          lsp_lines_active = not lsp_lines_active
-        end,
-        { desc = "Toggle lsp_lines" })
+      local function toggle()
+        require("lsp_lines").toggle()
+        vim.diagnostic.config({ virtual_text = not lsp_lines_active })
+        lsp_lines_active = not lsp_lines_active
+      end
+
+      local function toggle_current_line_only()
+        vim.diagnostic.config({ virtual_lines = {only_current_line = not lsp_only_current_line }})
+        lsp_only_current_line = not lsp_only_current_line
+      end
+
+      local fn = require('user.functions')
+      fn.nbind('<Leader>ux', toggle, { desc = "Toggle lsp_lines and virtual_text" })
+      fn.nbind('<Leader>uX',toggle_current_line_only, { desc = "Toggle virtual_lines - current line only" })
     end,
   }
   -- }}}
