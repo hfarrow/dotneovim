@@ -55,7 +55,7 @@ return function(use)
       fn.nbind('[x', function() vim.diagnostic.goto_prev({ float = false }) end, diag_opts)
       fn.nbind(']x', function() vim.diagnostic.goto_next({ float = false }) end, diag_opts)
 
-      local on_attach = function(client, bufnr)
+      local on_attach = function(_, bufnr)
         -- Mappings
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local builtin = require('telescope/builtin')
@@ -465,7 +465,17 @@ return function(use)
       fn.nbind('<Leader>uX', toggle_current_line_only, { desc = "Toggle virtual_lines - current line only" })
     end,
   }
-  -- }}}
+
+  use {'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function()
+      require('lualine').setup({
+        options = {
+          theme = 'gruvbox-material'
+        }
+      })
+    end
+  }
 
   -- {{{ Git
   use { 'lewis6991/gitsigns.nvim',
