@@ -1,4 +1,5 @@
 local fn = require('user.functions')
+local autocmd = fn.autocmd_helper('keymaps_cmds', { clear = true })
 
 -- Helpers
 local silent = fn.bind_opt.silent
@@ -49,11 +50,18 @@ fn.xbind('<Leader>p', '"_dP')
 -- make 'Y' consistent with 'C' and 'D'. See :help Y
 fn.nbind('Y', 'y$')
 
--- terminal return to normal mode
-fn.tbind('<Esc>', '<C-\\><C-n>')
-
 -- break undo at line boundries, braces, parent, brackets
 fn.ibind('<CR>', '<CR><C-g>u')
+
+------------------------------------------------------------------------------------------------------------------------
+-- Terminal Mappings
+------------------------------------------------------------------------------------------------------------------------
+autocmd('TermOpen', {
+  desc = "Return to normal mode (buffer local)",
+  callback = function(_)
+    fn.tbind('<Esc>', '<C-\\><C-n>', { buffer = true })
+  end
+})
 
 ------------------------------------------------------------------------------------------------------------------------
 -- Command Mappings

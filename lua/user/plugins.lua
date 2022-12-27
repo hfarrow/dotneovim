@@ -476,6 +476,28 @@ return function(use)
   }
   --}}}
 
+  --{{{ Terminal
+  use {"akinsho/toggleterm.nvim", tag = '*',
+    config = function()
+    require("toggleterm").setup()
+      local Terminal  = require('toggleterm.terminal').Terminal
+      local lazygit = Terminal:new({
+        cmd = 'lazygit',
+        hidden = true,
+        direction = 'float',
+        on_open = function (_)
+          require('user.functions').tunbind('<Esc>', {buffer = true})
+        end
+      })
+
+      function _Lazygit_toggle()
+        lazygit:toggle()
+      end
+
+      vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _Lazygit_toggle()<CR>", {noremap = true, silent = true})
+  end}
+  --}}}
+
   -- {{{ Themes
   -- use 'ellisonleao/gruvbox.nvim'
   -- use 'luisiacc/gruvbox-baby'

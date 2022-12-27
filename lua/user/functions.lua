@@ -12,7 +12,9 @@ local M = {
   ibind = function(lhs, rhs, opts) vim.keymap.set('i', lhs, rhs, opts) end,
   xbind = function(lhs, rhs, opts) vim.keymap.set('x', lhs, rhs, opts) end,
   tbind = function(lhs, rhs, opts) vim.keymap.set('t', lhs, rhs, opts) end,
+  itbind = function(lhs, rhs, opts) vim.keymap.set({'i', 't'}, lhs, rhs, opts) end,
   nxbind = function(lhs, rhs, opts) vim.keymap.set({ 'n', 'x' }, lhs, rhs, opts) end,
+  tunbind = function(lhs, opts) vim.keymap.del('t', lhs, opts) end,
 }
 
 function M.get_dotneovim_path(file)
@@ -44,23 +46,23 @@ function M.toggle_opt(prop, scope, on, off)
   end
 end
 
-function M.autocmd_helper(augroup, options)
+function M.autocmd_helper(augroup, opts)
   if type(augroup) == 'string' then
-    augroup = vim.api.nvim_create_augroup(augroup, options)
+    augroup = vim.api.nvim_create_augroup(augroup, opts)
   end
-  return function(events, options)
+  return function(events, autocmd_opts)
     if type(events) ~= 'table' then
       events = { events }
     end
-    if (options.pattern == nil) then
-      options.pattern = '*'
+    if (autocmd_opts.pattern == nil) then
+      autocmd_opts.pattern = '*'
     end
     vim.api.nvim_create_autocmd(events, {
       group = augroup,
-      desc = options.desc,
-      pattern = options.pattern,
-      command = options.command,
-      callback = options.callback
+      desc = autocmd_opts.desc,
+      pattern = autocmd_opts.pattern,
+      command = autocmd_opts.command,
+      callback = autocmd_opts.callback
     })
   end
 end
