@@ -54,13 +54,11 @@ return function(use)
       local fn = require('user.functions')
       fn.nbind('[x', function() vim.diagnostic.goto_prev({ float = false }) end, diag_opts)
       fn.nbind(']x', function() vim.diagnostic.goto_next({ float = false }) end, diag_opts)
-      fn.nbind('<space>q', vim.diagnostic.setloclist, diag_opts)
 
       local on_attach = function(client, bufnr)
         -- Mappings
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local builtin = require('telescope/builtin')
-        local fn = require('user.functions')
         local lsp_opts = { noremap = true, silent = true, buffer = bufnr }
         fn.nbind('gD', vim.lsp.buf.declaration, lsp_opts)
         fn.nbind('gd', builtin.lsp_definitions, lsp_opts)
@@ -69,6 +67,9 @@ return function(use)
         fn.nbind('gr', builtin.lsp_references, lsp_opts)
         fn.nbind('K', vim.lsp.buf.hover, lsp_opts)
         fn.nbind('<C-k>', vim.lsp.buf.signature_help, lsp_opts)
+        fn.nbind('<Leader>fS', builtin.lsp_document_symbols)
+        fn.nbind('<Leader>fs', builtin.lsp_dynamic_workspace_symbols)
+        fn.nbind('<Leader>fa', builtin.lsp_workspace_symbols)
         fn.nbind('<Leader>wa', vim.lsp.buf.add_workspace_folder, lsp_opts)
         fn.nbind('<Leader>wr', vim.lsp.buf.remove_workspace_folder, lsp_opts)
         fn.nbind('<Leader>wl', function()
@@ -366,8 +367,8 @@ return function(use)
       fn.nbind('<Leader>fc', builtin.commands)
       fn.nbind('<Leader>fr', builtin.pickers)
       fn.nbind('<Leader>fm', builtin.marks)
-      fn.nbind('<Leader>fx', builtin.quickfix)
-      fn.nbind('<Leader>fz', builtin.quickfixhistory)
+      fn.nbind('<Leader>fq', builtin.quickfix)
+      fn.nbind('<Leader>fQ', builtin.quickfixhistory)
       fn.nbind('<Leader>fo', builtin.vim_options)
       fn.nbind('<Leader>fy', builtin.registers)
       fn.nbind('<Leader>fe', builtin.resume)
@@ -375,6 +376,7 @@ return function(use)
       fn.nbind('<Leader>fv', builtin.spell_suggest)
       fn.nbind('<Leader>fj', builtin.jumplist)
       fn.nbind('<Leader>f<Leader>', builtin.keymaps)
+      fn.nbind('<Leader>fx', builtin.diagnostics)
     end
   }
 
@@ -409,13 +411,6 @@ return function(use)
       fn.nbind('g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       fn.nbind('<Leader>l', '<Cmd>noh<CR>', kopts)
     end,
-  }
-
-  use { 'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-      require("scrollbar.handlers.gitsigns").setup()
-    end
   }
 
   use { 'folke/trouble.nvim',
@@ -461,16 +456,25 @@ return function(use)
       end
 
       local function toggle_current_line_only()
-        vim.diagnostic.config({ virtual_lines = {only_current_line = not lsp_only_current_line }})
+        vim.diagnostic.config({ virtual_lines = { only_current_line = not lsp_only_current_line } })
         lsp_only_current_line = not lsp_only_current_line
       end
 
       local fn = require('user.functions')
       fn.nbind('<Leader>ux', toggle, { desc = "Toggle lsp_lines and virtual_text" })
-      fn.nbind('<Leader>uX',toggle_current_line_only, { desc = "Toggle virtual_lines - current line only" })
+      fn.nbind('<Leader>uX', toggle_current_line_only, { desc = "Toggle virtual_lines - current line only" })
     end,
   }
   -- }}}
+
+  -- {{{ Git
+  use { 'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+      require("scrollbar.handlers.gitsigns").setup()
+    end
+  }
+  --}}}
 
   -- {{{ Themes
   -- use 'ellisonleao/gruvbox.nvim'
@@ -479,8 +483,8 @@ return function(use)
   -- }}}
 
   -- {{{ Writing
-  use {'ellisonleao/glow.nvim',
-    config = function ()
+  use { 'ellisonleao/glow.nvim',
+    config = function()
       require('glow').setup({
         glow_path = '/usr/bin/glow',
         install_path = "~/.local/bin",
