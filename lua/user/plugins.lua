@@ -477,25 +477,40 @@ return function(use)
   --}}}
 
   --{{{ Terminal
-  use {"akinsho/toggleterm.nvim", tag = '*',
+  use { "akinsho/toggleterm.nvim", tag = '*',
     config = function()
-    require("toggleterm").setup()
-      local Terminal  = require('toggleterm.terminal').Terminal
-      local lazygit = Terminal:new({
+      require("toggleterm").setup()
+
+      local Terminal = require('toggleterm.terminal').Terminal
+      local lazygit  = Terminal:new({
         cmd = 'lazygit',
         hidden = true,
         direction = 'float',
-        on_open = function (_)
-          require('user.functions').tunbind('<Esc>', {buffer = true})
-        end
+        on_open = function(_)
+          require('user.functions').tunbind('<Esc>', { buffer = true })
+        end,
+        float_opts = {
+          border = 'single',
+          winblend = 0,
+          width = function()
+            return math.ceil(vim.o.columns * 1.0)
+          end,
+          height = function()
+            return math.ceil(vim.o.lines * 1.0)
+          end,
+          highlights = {
+            border = "FloatBorder",
+            background = "NormalFloat",
+          },
+        },
       })
 
       function _Lazygit_toggle()
         lazygit:toggle()
       end
 
-      vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _Lazygit_toggle()<CR>", {noremap = true, silent = true})
-  end}
+      vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _Lazygit_toggle()<CR>", { noremap = true, silent = true })
+    end }
   --}}}
 
   -- {{{ Themes
@@ -521,7 +536,7 @@ return function(use)
     end
   }
 
-  use {'numToStr/Comment.nvim',
+  use { 'numToStr/Comment.nvim',
     config = function()
       require('Comment').setup()
     end
