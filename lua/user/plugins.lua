@@ -466,7 +466,7 @@ return function(use)
     end,
   }
 
-  use {'nvim-lualine/lualine.nvim',
+  use { 'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function()
       require('lualine').setup({
@@ -477,11 +477,96 @@ return function(use)
     end
   }
 
+  use { 'romgrk/barbar.nvim',
+    wants = 'nvim-web-devicons',
+    config = function()
+      require('bufferline').setup({
+        -- Enable/disable current/total tabpages indicator (top right corner)
+        tabpages = true,
+        icon_pinned = '車',
+        maximum_padding = 1,
+        minimum_padding = 1,
+        maximum_length = 30,
+        diagnostics = {
+          [vim.diagnostic.severity.ERROR] = { enabled = true, icon = '' },
+          [vim.diagnostic.severity.WARN] = { enabled = true, icon = '' },
+          [vim.diagnostic.severity.INFO] = { enabled = false },
+          [vim.diagnostic.severity.HINT] = { enabled = false },
+        }
+      })
+
+      local nvim_tree_events = require('nvim-tree.events')
+      local bufferline_api = require('bufferline.api')
+
+      local function get_tree_size()
+        return require 'nvim-tree.view'.View.width
+      end
+
+      nvim_tree_events.subscribe('TreeOpen', function()
+        bufferline_api.set_offset(get_tree_size())
+      end)
+
+      nvim_tree_events.subscribe('Resize', function()
+        bufferline_api.set_offset(get_tree_size())
+      end)
+
+      nvim_tree_events.subscribe('TreeClose', function()
+        bufferline_api.set_offset(0)
+      end)
+
+      local fn = require('user.functions')
+      local opts = fn.bind_opt.silent
+
+      -- Move to previous/next
+      fn.nbind('<A-,>', '<Cmd>BufferPrevious<CR>', opts)
+      fn.nbind('<A-.>', '<Cmd>BufferNext<CR>', opts)
+      -- Re-order to previous/next
+      fn.nbind('<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
+      fn.nbind('<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+      -- Goto buffer in position...
+      fn.nbind('<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
+      fn.nbind('<A-2>', '<Cmd>BufferGoto 2<CR>', opts)
+      fn.nbind('<A-3>', '<Cmd>BufferGoto 3<CR>', opts)
+      fn.nbind('<A-4>', '<Cmd>BufferGoto 4<CR>', opts)
+      fn.nbind('<A-5>', '<Cmd>BufferGoto 5<CR>', opts)
+      fn.nbind('<A-6>', '<Cmd>BufferGoto 6<CR>', opts)
+      fn.nbind('<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
+      fn.nbind('<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
+      fn.nbind('<A-9>', '<Cmd>BufferGoto 9<CR>', opts)
+      fn.nbind('<A-0>', '<Cmd>BufferLast<CR>', opts)
+      -- Pin/unpin buffer
+      fn.nbind('<A-p>', '<Cmd>BufferPin<CR>', opts)
+      -- Close buffer
+      fn.nbind('<A-c>', '<Cmd>BufferClose<CR>', opts)
+      -- Wipeout buffer
+      --                 :BufferWipeout
+      -- Close commands
+      --                 :BufferCloseAllButCurrent
+      --                 :BufferCloseAllButPinned
+      --                 :BufferCloseAllButCurrentOrPinned
+      --                 :BufferCloseBuffersLeft
+      --                 :BufferCloseBuffersRight
+      -- Magic buffer-picking mode
+      fn.nbind('<C-p>', '<Cmd>BufferPick<CR>', opts)
+      -- Sort automatically by...
+      fn.nbind('<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
+      fn.nbind('<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
+      fn.nbind('<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
+      fn.nbind('<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
+    end
+  }
+
   -- {{{ Git
   use { 'lewis6991/gitsigns.nvim',
     config = function()
       require('gitsigns').setup()
       require("scrollbar.handlers.gitsigns").setup()
+    end
+  }
+
+  use { 'sindrets/diffview.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function()
     end
   }
   --}}}
