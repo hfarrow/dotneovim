@@ -557,6 +557,7 @@ return function(use)
       fn.nbind('<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
     end
   }
+  -- }}}
 
   -- {{{ Git
   use { 'lewis6991/gitsigns.nvim',
