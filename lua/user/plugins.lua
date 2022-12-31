@@ -638,6 +638,14 @@ return function(use)
       require('Comment').setup()
     end
   }
+
+  use {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+      }
+    end
+  }
   -- }}}
 
 end
