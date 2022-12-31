@@ -400,12 +400,14 @@ return function(use)
       local kopts = { noremap = true, silent = true }
       local fn = require('user.functions')
       fn.nbind('n',
-        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>zz]],
         kopts)
       fn.nbind('N',
-        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>zz]],
         kopts)
-      fn.nbind('*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      fn.nbind('*',
+        [[:let stay_star_view = winsaveview()<CR>*<Cmd>lua require('hlslens').start()<CR>:call winrestview(stay_star_view)<cr>]]
+        , kopts)
       fn.nbind('#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       fn.nbind('g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       fn.nbind('g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
