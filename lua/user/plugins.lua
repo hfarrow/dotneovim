@@ -9,7 +9,7 @@ local autocmd = f.autocmd_helper('plugins', { clear = true })
 
 local configure_plugins = function(use)
   -- {{{ Core
-  use 'tpope/vim-sensible'
+  use { 'tpope/vim-sensible' }
   -- }}}
 
   -- {{{ Syntax
@@ -104,12 +104,12 @@ local configure_plugins = function(use)
         capabilities = capabilities,
         on_attach = on_attach,
         settings = {
-          ["rust-analyzer"] = {
+          ['rust-analyzer'] = {
             imports = {
               granularity = {
-                group = "module",
+                group = 'module',
               },
-              prefix = "self",
+              prefix = 'self',
             },
             cargo = {
               buildScripts = {
