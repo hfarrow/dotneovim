@@ -3,7 +3,11 @@
 local lsp_lines_active = true
 local lsp_only_current_line = false
 
-return function(use)
+local f = require('user.functions')
+local autocmd = f.autocmd_helper('plugins', { clear = true })
+
+
+local configure_plugins =  function(use)
   -- {{{ Core
   use 'tpope/vim-sensible'
   -- }}}
@@ -148,6 +152,10 @@ return function(use)
             },
           },
         },
+      })
+
+      require('lspconfig').yamlls.setup({
+
       })
     end
   }
@@ -640,8 +648,7 @@ return function(use)
     end
   }
 
-  use {
-    "folke/zen-mode.nvim",
+  use {'folke/zen-mode.nvim',
     config = function()
       require("zen-mode").setup {
       }
@@ -650,3 +657,38 @@ return function(use)
   -- }}}
 
 end
+
+-- {{{ Packer
+local ensure_packer = function()
+  local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    vim.cmd('packadd packer.nvim')
+    return true
+  end
+  return false
+end
+
+autocmd('BufWritePost', {
+  desc = 'Compile Packer on config save',
+  pattern = { 'plugins.lua' },
+  callback = function(_)
+    vim.api.nvim_command('source <afile>')
+    vim.api.nvim_command('PackerCompile')
+  end
+})
+
+local packer_bootstrap = ensure_packer()
+return require('packer').startup(function(use)
+
+  use 'wbthomason/packer.nvim'
+
+  configure_plugins(use)
+
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+end)
+-- }}}

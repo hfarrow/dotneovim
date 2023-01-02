@@ -14,14 +14,12 @@ vim.g.loaded_netrwPlugin = 1
 -- Basic editor options
 require('user.settings')
 
+-- Plugin management and config
+require('user.plugins')
+
 -- User defined commands
 require('user.commands')
-
--- Plugins
-require('plugins.manager')
 
 -- Keybindings
 require('user.keymaps')
 
--- Plugin management and config
-require('user.plugins')
