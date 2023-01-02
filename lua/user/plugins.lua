@@ -7,7 +7,7 @@ local f = require('user.functions')
 local autocmd = f.autocmd_helper('plugins', { clear = true })
 
 
-local configure_plugins =  function(use)
+local configure_plugins = function(use)
   -- {{{ Core
   use 'tpope/vim-sensible'
   -- }}}
@@ -183,6 +183,15 @@ local configure_plugins =  function(use)
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
+          {
+            name = 'spell',
+            option = {
+              keep_all_entries = false,
+              enable_in_context = function()
+                return require('cmp.config.context').in_treesitter_capture('spell')
+              end,
+            },
+          },
         }, {
           { name = 'buffer' },
         }),
@@ -244,6 +253,7 @@ local configure_plugins =  function(use)
   use 'hrsh7th/cmp-git'
   use 'hrsh7th/cmp-nvim-lua'
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
+  use 'hrsh7th/cmp-spell'
   use 'saadparwaiz1/cmp_luasnip'
 
   use 'honza/vim-snippets'
@@ -381,7 +391,7 @@ local configure_plugins =  function(use)
       fn.nbind('<Leader>fy', builtin.registers)
       fn.nbind('<Leader>fe', builtin.resume)
       fn.nbind('<Leader>/', builtin.current_buffer_fuzzy_find)
-      fn.nbind('<Leader>fv', builtin.spell_suggest)
+      fn.nbind('<Leader>fz', builtin.spell_suggest)
       fn.nbind('<Leader>fj', builtin.jumplist)
       fn.nbind('<Leader>f<Leader>', builtin.keymaps)
       fn.nbind('<Leader>fx', builtin.diagnostics)
@@ -653,7 +663,7 @@ local configure_plugins =  function(use)
     end
   }
 
-  use {'folke/zen-mode.nvim',
+  use { 'folke/zen-mode.nvim',
     config = function()
       require("zen-mode").setup {
       }
