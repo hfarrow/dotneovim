@@ -1,4 +1,4 @@
---local s = vim.bo
---s.formatoptions:remove('t')
-vim.opt.formatoptions:remove('t')
-vim.opt.formatoptions:remove('c')
+-- recongize [n]umbered lists
+-- auto format [t]ext
+vim.opt_local.formatoptions:append('nt')
+vim.opt_local.spell = true

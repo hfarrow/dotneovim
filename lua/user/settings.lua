@@ -17,18 +17,16 @@ end
 vim.g.mapleader = ' '
 
 ------------------------------------------------------------------------------------------------------------------------
--- Navigation
-------------------------------------------------------------------------------------------------------------------------
-
-------------------------------------------------------------------------------------------------------------------------
 -- Formatting
 ------------------------------------------------------------------------------------------------------------------------
---Don't break line after 1 letter word; break before if possible
 s.textwidth = 120
-s.formatoptions:append('1') -- don't break a line after a one-letter word, break before if possible
--- TODO auto formatting comments was too strict. For example, in lua, I could not add a space after '--' and it was
--- making banners hard to edit. Maybe it can be per file type?
---s.formatoptions:append('ac') -- only autoformat comments
+-- [a]utoformat [c]omments but not [t]ext
+-- remove comment leader when [j]oining lines
+-- [ro] automatically insert comment leader hitting <Enter> in insert mode or after 'o' and 'O' in normal mode
+-- [q] allow formatting comments with 'gq'
+-- [l]ong lines are not broken in insert mode when a line was longer than 'textwidth'
+-- a trailing [w]hitespace is required to continue a paragraph
+s.formatoptions = 'ajcroqlw'
 s.list = true
 s.wrap = false
 
@@ -95,6 +93,8 @@ if vim.fn.exists('+undofile') then
   s.undofile = true
 end
 s.backupdir:remove('.')
+
+s.spelllang = { 'en_us' }
 
 ------------------------------------------------------------------------------------------------------------------------
 -- Auto Commands
