@@ -281,7 +281,7 @@ local configure_plugins =  function(use)
     config = function()
       require("nvim-tree").setup({})
       local fn = require('user.functions')
-      fn.nbind('<Leader>tt', ':NvimTreeToggle<CR>')
+      fn.nbind('<Leader>y', ':NvimTreeToggle<CR>')
     end,
   }
 
@@ -316,7 +316,7 @@ local configure_plugins =  function(use)
         { icon = '  ',
           desc = 'File Browser                            ',
           action = 'NvimTreeToggle',
-          shortcut = 'SPC t t' },
+          shortcut = 'SPC y' },
         { icon = '  ',
           desc = 'Recent Sessions                                ',
           shortcut = '',
@@ -587,6 +587,7 @@ local configure_plugins =  function(use)
     config = function()
       require("toggleterm").setup()
 
+      local fn = require('user.functions')
       local Terminal = require('toggleterm.terminal').Terminal
       local lazygit  = Terminal:new({
         cmd = 'lazygit',
@@ -615,7 +616,11 @@ local configure_plugins =  function(use)
         lazygit:toggle()
       end
 
-      vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _Lazygit_toggle()<CR>", { noremap = true, silent = true })
+      fn.nbind('<leader>lg', '<cmd>lua _Lazygit_toggle()<CR>', { noremap = true, silent = true })
+      fn.nbind('<leader>tt', ':ToggleTerm direction=tab<CR>')
+      fn.nbind('<leader>tf', ':ToggleTerm direction=float<CR>')
+      fn.nbind('<leader>tv', ':ToggleTerm direction=vertical<CR>')
+      fn.nbind('<leader>th', ':ToggleTerm direction=horizontal<CR>')
     end }
   --}}}
 
