@@ -253,7 +253,6 @@ local configure_plugins = function(use)
   use 'hrsh7th/cmp-git'
   use 'hrsh7th/cmp-nvim-lua'
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
-  use 'hrsh7th/cmp-spell'
   use 'saadparwaiz1/cmp_luasnip'
 
   use 'honza/vim-snippets'
