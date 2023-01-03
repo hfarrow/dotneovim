@@ -41,6 +41,8 @@ local configure_plugins = function(use)
       })
     end
   }
+
+  use { 'kkharji/sqlite.lua' }
   -- }}}
 
   -- {{{ LSP
@@ -667,7 +669,7 @@ local configure_plugins = function(use)
     config = function()
       require("toggleterm").setup()
 
-      local fn = require('user.functions')
+      local fn       = require('user.functions')
       local Terminal = require('toggleterm.terminal').Terminal
       local lazygit  = Terminal:new({
         cmd = 'lazygit',
@@ -757,6 +759,41 @@ local configure_plugins = function(use)
         }
       })
     end
+  }
+
+  use { 'AckslD/nvim-neoclip.lua',
+    requires = {
+      { 'kkharji/sqlite.lua', module = 'sqlite' },
+      { 'nvim-telescope/telescope.nvim' },
+    },
+    config = function()
+      require('telescope').load_extension('neoclip')
+      require('neoclip').setup({
+        enable_persistent_history = true,
+        continuous_sync = true,
+        keys = {
+          telescope = {
+            i = {
+              select = '<cr>',
+              paste = ';',
+              paste_behind = '<c-p>',
+              replay = '<c-q>', -- replay a macro
+              delete = '<c-d>', -- delete an entry
+              custom = {},
+            },
+            n = {
+              select = '<cr>',
+              paste = {';', 'p',},
+              paste_behind = {':', 'P' },
+              replay = 'q',
+              delete = 'd',
+              custom = {},
+            },
+          },
+        },
+      })
+      require('user.functions').nbind('<Leader>fp', ':Telescope neoclip<CR>', lsp_opts)
+    end,
   }
   -- }}}
 end
