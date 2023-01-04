@@ -20,13 +20,12 @@ vim.g.mapleader = ' '
 -- Formatting
 ------------------------------------------------------------------------------------------------------------------------
 s.textwidth = 120
--- [a]utoformat [c]omments but not [t]ext
 -- remove comment leader when [j]oining lines
+-- [tc] auto-wrap text and comments using 'textwidth'
 -- [ro] automatically insert comment leader hitting <Enter> in insert mode or after 'o' and 'O' in normal mode
 -- [q] allow formatting comments with 'gq'
 -- [l]ong lines are not broken in insert mode when a line was longer than 'textwidth'
--- a trailing [w]hitespace is required to continue a paragraph
-s.formatoptions = 'ajcroqlw'
+s.formatoptions = 'jtcroql'
 s.list = true
 s.wrap = false
 
