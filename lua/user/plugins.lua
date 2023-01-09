@@ -7,7 +7,7 @@ local f = require('user.functions')
 local autocmd = f.autocmd_helper('plugins', { clear = true })
 
 
-local configure_plugins = function(use)
+local configure_plugins = function(use, use_rocks)
   -- {{{ Core
   use { 'tpope/vim-sensible' }
   -- }}}
@@ -819,11 +819,15 @@ autocmd('BufWritePost', {
 })
 
 local packer_bootstrap = ensure_packer()
-return require('packer').startup(function(use)
+local packer = require('packer')
+packer.init({ luarocks = { python_cmd = 'python3' } })
+return packer.startup(function(use, use_rocks)
 
+  local luarocks = require('packer.luarocks')
+  luarocks.install_commands()
   use 'wbthomason/packer.nvim'
 
-  configure_plugins(use)
+  configure_plugins(use, use_rocks)
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
