@@ -29,6 +29,7 @@ fn.nbind('<C-l>', '<C-w>l')
 -- move to beginning or end of line
 fn.nbind('H', '^')
 fn.nbind('L', '$')
+fn.vbind('H', '^')
 fn.vbind('L', 'g_')
 
 -- black hole register deleting and pasting
@@ -52,6 +53,9 @@ fn.nbind('Y', 'y$')
 
 -- break undo at line boundries, braces, parent, brackets
 fn.ibind('<CR>', '<CR><C-g>u')
+
+-- format current paragraph
+fn.nbind('<CR>', 'gwip')
 
 ------------------------------------------------------------------------------------------------------------------------
 -- Terminal Mappings

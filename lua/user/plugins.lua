@@ -63,15 +63,15 @@ local configure_plugins = function(use, use_rocks)
       local on_attach = function(_, bufnr)
         -- Mappings
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local builtin = require('telescope/builtin')
+        local builtin = require('telescope.builtin')
         local lsp_opts = { noremap = true, silent = true, buffer = bufnr }
         fn.nbind('gD', vim.lsp.buf.declaration, lsp_opts)
         fn.nbind('gd', builtin.lsp_definitions, lsp_opts)
         fn.nbind('<Leader>gd', builtin.lsp_type_definitions, lsp_opts)
         fn.nbind('gi', builtin.lsp_implementations, lsp_opts)
         fn.nbind('gr', builtin.lsp_references, lsp_opts)
-        fn.nbind('K', vim.lsp.buf.hover, lsp_opts)
-        fn.nbind('<C-k>', vim.lsp.buf.signature_help, lsp_opts)
+        fn.nbind('<C-;>', vim.lsp.buf.hover, lsp_opts)
+        fn.nbind('<A-;>', vim.lsp.buf.signature_help, lsp_opts)
         fn.nbind('<Leader>fS', builtin.lsp_document_symbols)
         fn.nbind('<Leader>fs', builtin.lsp_dynamic_workspace_symbols)
         fn.nbind('<Leader>fa', builtin.lsp_workspace_symbols)
@@ -446,10 +446,10 @@ local configure_plugins = function(use, use_rocks)
         },
       }
 
-      local builtin = require('telescope/builtin')
+      local builtin = require('telescope.builtin')
       local fn = require('user.functions')
-      fn.nbind('\'', builtin.find_files)
-      fn.nbind(';', builtin.oldfiles)
+      fn.nbind('<Leader>\'', builtin.find_files)
+      fn.nbind('<Leader>;', builtin.oldfiles)
       fn.nbind('<Leader>fg', builtin.live_grep)
       fn.nbind('<Leader>*', builtin.grep_string)
       fn.nbind('<Leader>fb', builtin.buffers)
@@ -738,6 +738,19 @@ local configure_plugins = function(use, use_rocks)
   use { 'folke/zen-mode.nvim',
     config = function()
       require("zen-mode").setup {
+        window = {
+          width = 122,
+          options = {
+            signcolumn = 'no',
+            number = false
+          },
+        },
+        on_open = function(_)
+          vim.cmd('ScrollbarHide')
+        end,
+        on_close = function(_)
+          vim.cmd('ScrollbarShow')
+        end,
       }
     end
   }
@@ -783,8 +796,8 @@ local configure_plugins = function(use, use_rocks)
             },
             n = {
               select = '<cr>',
-              paste = {';', 'p',},
-              paste_behind = {':', 'P' },
+              paste = { ';', 'p', },
+              paste_behind = { ':', 'P' },
               replay = 'q',
               delete = 'd',
               custom = {},
@@ -792,7 +805,7 @@ local configure_plugins = function(use, use_rocks)
           },
         },
       })
-      require('user.functions').nbind('<Leader>fp', ':Telescope neoclip<CR>', lsp_opts)
+      require('user.functions').nbind('<Leader>fp', ':Telescope neoclip<CR>')
     end,
   }
   -- }}}
