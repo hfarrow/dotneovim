@@ -6,6 +6,7 @@ s.spell = true
 s.tabstop = 2
 s.shiftwidth = 2
 s.softtabstop = 2
+s.formatoptions:append('w')
 
 -- Wrap current word in a md link
 fn.nbind('<BS>', "gziw]%a()<Left>", { remap = true })
@@ -28,7 +29,6 @@ autocmd(
     callback = function()
       -- TODO: detect if inside blog? or turn blog_emded_img into generic markdown image util and pass directory to
       -- search as option?
-      print('BufEnter' .. vim.fn.expand('%'))
       vim.api.nvim_buf_create_user_command(
         0,
         cmd_name_blog_img,
