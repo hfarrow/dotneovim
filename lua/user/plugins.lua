@@ -52,6 +52,38 @@ local configure_plugins = function(use, use_rocks)
     end
   }
 
+  local on_attach = function(_, bufnr)
+    -- Mappings
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local builtin = require('telescope.builtin')
+    local fn = require('user.functions')
+    local lsp_opts = { noremap = true, silent = true, buffer = bufnr }
+    fn.nbind('gD', vim.lsp.buf.declaration, lsp_opts)
+    fn.nbind('gd', builtin.lsp_definitions, lsp_opts)
+    fn.nbind('<Leader>gd', builtin.lsp_type_definitions, lsp_opts)
+    fn.nbind('gi', builtin.lsp_implementations, lsp_opts)
+    fn.nbind('gr', builtin.lsp_references, lsp_opts)
+    fn.nbind('<C-;>', vim.lsp.buf.hover, lsp_opts)
+    fn.nbind('<A-;>', vim.lsp.buf.signature_help, lsp_opts)
+    fn.nbind('<Leader>fS', builtin.lsp_document_symbols)
+    fn.nbind('<Leader>fs', builtin.lsp_dynamic_workspace_symbols)
+    fn.nbind('<Leader>fa', builtin.lsp_workspace_symbols)
+    fn.nbind('<Leader>wa', vim.lsp.buf.add_workspace_folder, lsp_opts)
+    fn.nbind('<Leader>wr', vim.lsp.buf.remove_workspace_folder, lsp_opts)
+    fn.nbind('<Leader>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, lsp_opts)
+    fn.nbind('<Leader>rn', vim.lsp.buf.rename, lsp_opts)
+    fn.nbind('<Leader>ca', vim.lsp.buf.code_action, lsp_opts)
+    fn.nbind('<Leader>ff', function() vim.lsp.buf.format { async = true } end, lsp_opts)
+
+    local rt = require('rust-tools')
+    -- Hover actions
+    vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+    -- Code action groups
+    vim.keymap.set("n", "<Leader>cA", rt.code_action_group.code_action_group, { buffer = bufnr })
+  end
+
   use { 'hrsh7th/cmp-nvim-lsp',
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -61,30 +93,6 @@ local configure_plugins = function(use, use_rocks)
       fn.nbind('[x', function() vim.diagnostic.goto_prev({ float = false }) end, diag_opts)
       fn.nbind(']x', function() vim.diagnostic.goto_next({ float = false }) end, diag_opts)
 
-      local on_attach = function(_, bufnr)
-        -- Mappings
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local builtin = require('telescope.builtin')
-        local lsp_opts = { noremap = true, silent = true, buffer = bufnr }
-        fn.nbind('gD', vim.lsp.buf.declaration, lsp_opts)
-        fn.nbind('gd', builtin.lsp_definitions, lsp_opts)
-        fn.nbind('<Leader>gd', builtin.lsp_type_definitions, lsp_opts)
-        fn.nbind('gi', builtin.lsp_implementations, lsp_opts)
-        fn.nbind('gr', builtin.lsp_references, lsp_opts)
-        fn.nbind('<C-;>', vim.lsp.buf.hover, lsp_opts)
-        fn.nbind('<A-;>', vim.lsp.buf.signature_help, lsp_opts)
-        fn.nbind('<Leader>fS', builtin.lsp_document_symbols)
-        fn.nbind('<Leader>fs', builtin.lsp_dynamic_workspace_symbols)
-        fn.nbind('<Leader>fa', builtin.lsp_workspace_symbols)
-        fn.nbind('<Leader>wa', vim.lsp.buf.add_workspace_folder, lsp_opts)
-        fn.nbind('<Leader>wr', vim.lsp.buf.remove_workspace_folder, lsp_opts)
-        fn.nbind('<Leader>wl', function()
-          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, lsp_opts)
-        fn.nbind('<Leader>rn', vim.lsp.buf.rename, lsp_opts)
-        fn.nbind('<Leader>ca', vim.lsp.buf.code_action, lsp_opts)
-        fn.nbind('<Leader>ff', function() vim.lsp.buf.format { async = true } end, lsp_opts)
-      end
       -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
       --[[
       require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
@@ -93,7 +101,7 @@ local configure_plugins = function(use, use_rocks)
       --]]
 
       require 'lspconfig'.omnisharp.setup {
-        cmd = { '/home/hfarrow/.local/omnisharp/run', '--languageserver' , '--hostPID', tostring(vim.fn.getpid()) },
+        cmd = { '/home/hfarrow/.local/omnisharp/run', '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
 
         -- Enables support for reading code style, naming convention and analyzer
         -- settings from .editorconfig.
@@ -136,28 +144,28 @@ local configure_plugins = function(use, use_rocks)
         on_attach = on_attach,
       })
 
-      require('lspconfig').rust_analyzer.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = {
-          ['rust-analyzer'] = {
-            imports = {
-              granularity = {
-                group = 'module',
-              },
-              prefix = 'self',
-            },
-            cargo = {
-              buildScripts = {
-                enable = true,
-              },
-            },
-            procMacro = {
-              enable = true
-            },
-          }
-        }
-      })
+      -- require('lspconfig').rust_analyzer.setup({
+      --   capabilities = capabilities,
+      --   on_attach = on_attach,
+      --   settings = {
+      --     ['rust-analyzer'] = {
+      --       imports = {
+      --         granularity = {
+      --           group = 'module',
+      --         },
+      --         prefix = 'self',
+      --       },
+      --       cargo = {
+      --         buildScripts = {
+      --           enable = true,
+      --         },
+      --       },
+      --       procMacro = {
+      --         enable = true
+      --       },
+      --     }
+      --   }
+      -- })
 
       require('lspconfig').pyright.setup({
         capabilities = capabilities,
@@ -192,6 +200,29 @@ local configure_plugins = function(use, use_rocks)
 
       require('lspconfig').yamlls.setup({
 
+      })
+    end
+  }
+
+  use { 'simrat39/rust-tools.nvim',
+    config = function()
+      local rt = require('rust-tools')
+      rt.setup({
+        tools = {
+          runnables = {
+            use_telescope = true
+          }
+        },
+        server = {
+          on_attach = on_attach,
+          settings = {
+            ['rust-analyzer'] = {
+              checkOnSave = {
+                command = 'clippy'
+              }
+            }
+          }
+        }
       })
     end
   }
@@ -316,6 +347,10 @@ local configure_plugins = function(use, use_rocks)
     end
   }
 
+  -- }}}
+
+  -- {{{ Debugging
+  use { 'mfussenegger/nvim-dap' }
   -- }}}
 
   -- {{{ Navigation
@@ -508,7 +543,14 @@ local configure_plugins = function(use, use_rocks)
   -- }}}
 
   -- {{{ Display and Diagnostics
-  use 'lfv89/vim-interestingwords'
+  use { 'lfv89/vim-interestingwords',
+    config = function()
+      local fn = require('user.functions')
+      -- auto center search
+      fn.nbind('n', ':call WordNavigation(1)<CR>zz', fn.bind_opt.silent)
+      fn.nbind('N', ':call WordNavigation(0)<CR>zz', fn.bind_opt.silent)
+    end
+  }
 
   use { 'petertriho/nvim-scrollbar',
     config = function()
