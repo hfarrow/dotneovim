@@ -365,50 +365,80 @@ local configure_plugins = function(use, use_rocks)
     end,
   }
 
-  use { 'glepnir/dashboard-nvim',
+  use { 'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
     config = function()
-      local db = require('dashboard')
-      --db.preview_command = 'cat | lolcat -F 0.3'
-      --db.preview_file_path = home .. '/.config/nvim/static/neovim.cat'
-      --db.preview_file_height = 11
-      --db.preview_file_width = 70
-      db.custom_header = {
-        ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
-        ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
-        ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
-        ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
-        ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
-        ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
-      }
-      db.custom_center = {
-        { icon = '  ',
-          desc = 'Find File                                     ',
-          action = 'Telescope find_files find_command=rg,--hidden,--files',
-          shortcut = '\'' },
-        { icon = '  ',
-          desc = 'Recent Files                                  ',
-          action = 'Telescope oldfiles',
-          shortcut = ';' },
-        { icon = '  ',
-          desc = 'Find Word                               ',
-          action = 'Telescope live_grep',
-          shortcut = 'SPC f g' },
-        { icon = '  ',
-          desc = 'File Browser                            ',
-          action = 'NvimTreeToggle',
-          shortcut = 'SPC y' },
-        { icon = '  ',
-          desc = 'Recent Sessions                                ',
-          shortcut = '',
-          action = 'SessionLoad' },
-        { icon = '  ',
-          desc = 'Open Neovim Config                             ',
-          action = 'Telescope find_files cwd=' .. require('user.functions').get_dotneovim_path(),
-          shortcut = '' },
-        { icon = '  ',
-          desc = 'Open ~/.config                                 ',
-          action = 'Telescope find_files cwd=~/.config',
-          shortcut = '' },
+      require('dashboard').setup {
+        theme = 'hyper',
+        config = {
+          --preview_command = 'cat | lolcat -F 0.3',
+          --preview_file_path = home .. '/.config/nvim/static/neovim.cat',
+          --preview_file_height = 11,
+          --preview_file_width = 70,
+          header = {
+            ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+            ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+            ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+            ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+            ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+            ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+          },
+          packages = { enable = false },
+          project = { enable = false },
+          mru = { limit = 20, cwd_only = false },
+          shortcut =
+          {
+            {
+              icon = ' ',
+              desc = 'Files',
+              group = 'Label',
+              action = 'Telescope find_files find_command=rg,--files prompt_prefix=🔍',
+              key = 'f'
+            },
+            {
+              icon = ' ',
+              desc = 'All Files',
+              group = 'Label',
+              action = 'Telescope find_files find_command=rg,--ignore,--hidden,--files prompt_prefix=🔍',
+              key = 'F'
+            },
+            {
+              icon = '  ',
+              desc = 'Recent Files',
+              group = 'Label',
+              action = 'Telescope oldfiles',
+              key = ';'
+            },
+            { 
+              icon = ' ',
+              desc = 'Find Word',
+              group = 'Label',
+              action = 'Telescope live_grep',
+              key = '/'
+            },
+            {
+              icon = ' ',
+              desc = 'Tree',
+              group = 'Label',
+              action = 'NvimTreeToggle',
+              key = 't'
+            },
+            {
+              icon = ' ',
+              desc = '/.neovim',
+              group = 'Label',
+              action = 'Telescope find_files cwd=' .. require('user.functions').get_dotneovim_path(),
+              key = 'n'
+            },
+            {
+              icon = ' ',
+              desc = '/.config',
+              group = 'Label',
+              action = 'Telescope find_files cwd=~/.config',
+              key = 'c'
+            },
+          }
+        },
       }
     end
   }
@@ -652,16 +682,20 @@ local configure_plugins = function(use, use_rocks)
       require('bufferline').setup({
         -- Enable/disable current/total tabpages indicator (top right corner)
         tabpages = true,
-        icon_pinned = '車',
+        icons = {
+          pinned = {
+            button = '車',
+          },
+          diagnostics = {
+            [vim.diagnostic.severity.ERROR] = { enabled = true, icon = '' },
+            [vim.diagnostic.severity.WARN] = { enabled = true, icon = '' },
+            [vim.diagnostic.severity.INFO] = { enabled = false },
+            [vim.diagnostic.severity.HINT] = { enabled = false },
+          },
+        },
         maximum_padding = 1,
         minimum_padding = 1,
         maximum_length = 30,
-        diagnostics = {
-          [vim.diagnostic.severity.ERROR] = { enabled = true, icon = '' },
-          [vim.diagnostic.severity.WARN] = { enabled = true, icon = '' },
-          [vim.diagnostic.severity.INFO] = { enabled = false },
-          [vim.diagnostic.severity.HINT] = { enabled = false },
-        }
       })
 
       local nvim_tree_events = require('nvim-tree.events')
