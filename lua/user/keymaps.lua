@@ -55,7 +55,7 @@ fn.nbind('Y', 'y$')
 fn.ibind('<CR>', '<CR><C-g>u')
 
 -- format current paragraph
-fn.nbind('<CR>', 'gwip')
+fn.nbind('<Leader>fp', 'gwip')
 
 ------------------------------------------------------------------------------------------------------------------------
 -- Terminal Mappings
