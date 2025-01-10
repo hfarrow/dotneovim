@@ -81,7 +81,9 @@ s.backup = true
 -- Allow pasting from OS clipboard with 'P'
 -- Sometimes this will hang the entire terminal. Apparently xsel might work better than xclip but xsel makes nvim
 -- hang at startup. </shrug>
---s.clipboard:append('unnamedplus')
+-- use 'unnamed' on Mac and unnamedplus on Linux?
+s.clipboard:append('unnamed')
+-- s.clipboard:append('unnamedplus')
 
 -- Time out on key codes but not mappings
 s.timeout = false
