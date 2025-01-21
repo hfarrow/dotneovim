@@ -354,7 +354,7 @@ local configure_plugins = function(use, use_rocks)
   -- }}}
 
   -- {{{ Navigation
-  use { 'nvim-tree/nvim-tree.lua', tag = 'nightly',
+  use { 'nvim-tree/nvim-tree.lua',
     requires = {
       'nvim-tree/nvim-web-devicons',
     },
@@ -526,7 +526,7 @@ local configure_plugins = function(use, use_rocks)
   use { 'nvim-telescope/telescope.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
-      local trouble = require("trouble.providers.telescope")
+      local open_with_trouble = require("trouble.sources.telescope").open
       require('telescope').setup {
         defaults = {
           cache_picker = {
@@ -537,10 +537,10 @@ local configure_plugins = function(use, use_rocks)
               ['<C-J>'] = 'move_selection_next',
               ['<C-K>'] = 'move_selection_previous',
               [';']     = 'select_default',
-              ["<c-t>"] = trouble.open_with_trouble,
+              ["<c-t>"] = open_with_trouble,
             },
             n = {
-              ["<c-t>"] = trouble.open_with_trouble
+              ["<c-t>"] = open_with_trouble
             },
           },
         },
