@@ -5,9 +5,7 @@ local M = {
     silent = { silent = true },
     expr = { expr = true },
   },
-  nbind = function(lhs, rhs, opts)
-    vim.keymap.set('n', lhs, rhs, opts)
-  end,
+  nbind = function(lhs, rhs, opts) vim.keymap.set('n', lhs, rhs, opts) end,
   vbind = function(lhs, rhs, opts) vim.keymap.set('v', lhs, rhs, opts) end,
   ibind = function(lhs, rhs, opts) vim.keymap.set('i', lhs, rhs, opts) end,
   xbind = function(lhs, rhs, opts) vim.keymap.set('x', lhs, rhs, opts) end,
