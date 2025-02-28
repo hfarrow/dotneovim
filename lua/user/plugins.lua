@@ -551,6 +551,13 @@ local configure_plugins = function(use, use_rocks)
       fn.nbind('<Leader>\'', builtin.find_files)
       fn.nbind('<Leader>;', builtin.oldfiles)
       fn.nbind('<Leader>fg', builtin.live_grep)
+      fn.nbind('<Leader>fG', function()
+        builtin.live_grep({
+          additional_args = function()
+            return { "--hidden" }
+          end,
+        })
+      end)
       fn.nbind('<Leader>*', builtin.grep_string)
       fn.nbind('<Leader>fb', builtin.buffers)
       fn.nbind('<Leader>fh', builtin.help_tags)
