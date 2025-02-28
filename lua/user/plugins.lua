@@ -639,12 +639,12 @@ local configure_plugins = function(use, use_rocks)
 
       local fn = require('user.functions')
       local opts = fn.bind_opt.silent
-      fn.nbind("<leader>xx", "<cmd>TroubleToggle<cr>", opts)
-      fn.nbind("<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
-      fn.nbind("<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", opts)
-      fn.nbind("<leader>xl", "<cmd>TroubleToggle loclist<cr>", opts)
-      fn.nbind("<leader>xq", "<cmd>TroubleToggle quickfix<cr>", opts)
-      fn.nbind("gR", "<cmd>TroubleToggle lsp_references<cr>", opts)
+      fn.nbind("<leader>xx", "<cmd>Trouble<cr>", opts)
+      fn.nbind("<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", opts)
+      fn.nbind("<leader>xd", "<cmd>Trouble document_diagnostics<cr>", opts)
+      fn.nbind("<leader>xl", "<cmd>Trouble loclist toggle<cr>", opts)
+      fn.nbind("<leader>xq", "<cmd>Trouble qflist toggle<cr>", opts)
+      fn.nbind("gR", "<cmd>Trouble lsp_references<cr>", opts)
     end
   }
 
