@@ -1,0 +1,65 @@
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'kana/vim-textobj-entire'
+
+packadd matchit
+
+set peekaboo
+set functiontextobj
+set which-key
+
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Common settings -------------------------
+" set showmode
+" set so=5
+" set incsearch
+" set nu
+
+""" Mappings
+imap jj <Esc>
+imap jk <Esc>
+imap kj <Esc>
+
+
+nmap <silent> n nzz
+nmap <silent> N Nzz
+
+vmap < <gv
+vmap > >gv
+
+nmap H ^
+nmap L $
+vmap H ^
+vmap L g_
+
+""" black hole register deleting and pasting
+""" 'dd', 'x' will no longer yank text.
+nnoremap d "_d
+xnoremap d "_d
+nnoremap D "_D
+xnoremap D "_D
+nnoremap x "_x
+xnoremap x "_x
+nnoremap X "_X
+xnoremap X "_X
+nnoremap c "_c
+xnoremap c "_c
+nnoremap C "_C
+xnoremap C "_C
+nnoremap <Leader>d d
+xnoremap <Leader>d d
+nnoremap <Leader>D D
+xnoremap <Leader>D D
+nnoremap <Leader>x x
+xnoremap <Leader>x x
+nnoremap <Leader>X X
+xnoremap <Leader>X X
+nnoremap <Leader>c c
+xnoremap <Leader>c c
+nnoremap <Leader>C C
+xnoremap <Leader>C C
+xnoremap <Leader>p "_dP
+
+nmap Y y$
