@@ -421,7 +421,7 @@ local configure_plugins = function(use, use_rocks)
               desc = 'Tree',
               group = 'Label',
               action = 'NvimTreeToggle',
-              key = 't'
+              key = 'y'
             },
             {
               icon = ' ',
