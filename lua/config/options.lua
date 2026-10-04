@@ -39,3 +39,4 @@ opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.termguicolors = true
 -- Do not set 'background': the TUI follows the terminal's appearance.
 vim.filetype.add({ extension = { txt = 'text', log = 'log' } })
+vim.filetype.add({ filename = { ['.zshrc'] = 'zsh', ['.zshenv'] = 'zsh', ['.zprofile'] = 'zsh', ['.zlogin'] = 'zsh', ['.zlogout'] = 'zsh' }, extension = { zsh = 'zsh' } })

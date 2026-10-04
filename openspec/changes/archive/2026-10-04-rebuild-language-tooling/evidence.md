@@ -1,0 +1,9 @@
+# Phase 4 evidence
+
+2026-10-04 macOS arm64, Neovim 0.12.5, Node 24.15.0, Python 3.13.12. Explicit plugin and tool scripts installed Mason stable 2.x, lspconfig 2.12.0, Blink 1.10.2 and its checksummed arm64 prebuilt matcher. All revisions locked. Managed receipts verified for BashLS 5.8.1, TSLS 6.0.1 (registry extra TypeScript 6.0.3), LuaLS 3.19.1, Pyright 1.1.414, Ruff 0.16.10 and ShellCheck v0.11.0. ShellCheck's registry version includes the `v` prefix; no host executable fallback.
+
+`tests/run.lua language` passed actual initialized Bash/TS/Lua/Pyright clients and nonempty definition responses; Bash ShellCheck SC2154 diagnostic; actual Ruff initialization/hover suppression; snippet capabilities before initialization; managed process paths/PATH precedence; real project venv and local TS compiler selection; missing TS7 compiler warning policy; quiet diagnostics and C#/Rust/Zsh/large-buffer exclusions. These are real processes, not mocked RPC.
+
+Attached `tests/ui.py` passed automatic real Blink menu, nil selection, unchanged selection text, unselected Ctrl-y no acceptance, Enter newline, explicit selection/Ctrl-y insertion, native snippet placeholders and Zsh buffer/path completion. Ran twice: provisioned Rust matcher and `DOTNEOVIM_BLINK_LUA=1` fallback. External UI now consumes message events so asynchronous startup messages cannot trigger a hit-enter stall. Prior core/reading/lifecycle/offline checks passed; phase 2 search/UI remains covered by the attached matrix and prior passing navigation suite.
+
+Registry refresh/outdated checks and Blink runtime downloads disabled. Explicit installer receipts reuse installed versions. Health available via ToolHealth. No blockers. Formatting/lint project policy follows in phase 5; live appearance and cross-platform runtime remain phase 7.

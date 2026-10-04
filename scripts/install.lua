@@ -19,4 +19,10 @@ for _, plugin in ipairs(require('lazy').plugins()) do
   assert(vim.uv.fs_stat(plugin.dir), 'Installation failed: ' .. plugin.name)
   for _, task in ipairs(plugin._.tasks or {}) do assert(not task:has_errors(), 'Plugin task failed: ' .. plugin.name) end
 end
+if require('lazy.core.config').plugins['blink.cmp'] then
+  local done, failure = false, nil
+  require('blink.cmp.fuzzy.download').ensure_downloaded(function(err) failure, done = err, true end)
+  assert(vim.wait(120000, function() return done end, 50), 'Blink matcher provisioning timed out')
+  assert(not failure, failure)
+end
 print('Plugin provisioning complete. Restart Neovim.')

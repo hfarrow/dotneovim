@@ -26,9 +26,9 @@
 
 ## 5. Language tooling increment
 
-- [ ] 5.1 Propose `rebuild-language-tooling` with `language-tooling` deltas, a versioned Mason provisioning procedure, native LSP ownership, completion acceptance semantics, and explicit Zsh fallback; verify server/runtime compatibility decisions and strict validation.
-- [ ] 5.2 Apply Mason, native LSP definitions/activation, and stable Blink for Bash/JS/TS/Lua/Python, documenting runtimes and Python environment handling; verify real server initialization/navigation on fixtures, capability ordering, no C#/Rust/Zsh LSP attachment, quiet diagnostics, automatic/no-preselect completion, Enter newline, selected `<C-y>` acceptance, native snippets, and managed-tool precedence.
-- [ ] 5.3 Archive and commit the language child after acceptance, updating the ledger; verify actual installed tool versions, completed checks/tasks, health results, and archive/commit references.
+- [x] 5.1 Propose `rebuild-language-tooling` with `language-tooling` deltas, a versioned Mason provisioning procedure, native LSP ownership, completion acceptance semantics, and explicit Zsh fallback; verify server/runtime compatibility decisions and strict validation.
+- [x] 5.2 Apply Mason, native LSP definitions/activation, and stable Blink for Bash/JS/TS/Lua/Python, documenting runtimes and Python environment handling; verify real server initialization/navigation on fixtures, capability ordering, no C#/Rust/Zsh LSP attachment, quiet diagnostics, automatic/no-preselect completion, Enter newline, selected `<C-y>` acceptance, native snippets, and managed-tool precedence.
+- [x] 5.3 Archive and commit the language child after acceptance, updating the ledger; verify actual installed tool versions, completed checks/tasks, health results, and archive/commit references.
 
 ## 6. Project formatting increment
 

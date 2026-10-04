@@ -50,6 +50,30 @@ nothing. Files over 1 MiB or with a line over 10,000 bytes skip parsing, rainbow
 Markdown decoration and semantic tooling. Markdown/text spelling uses the
 preserved `spell/en.utf-8.add`; native `zg` updates that dictionary deliberately.
 
+## Language tools
+
+Requires Node **>=22.22.2**, npm and Python **>=3.10** for the selected tools.
+Run `nvim -l scripts/tools.lua` explicitly after plugin installation. It refreshes
+the Mason registry once, then installs exact versions from `lua/config/tools.lua`.
+Normal startup and opening `:Mason` do not refresh/download/check versions.
+`:ToolHealth` shows required managed paths; host copies are not substituted.
+
+BashLS 5.8.1 + ShellCheck v0.11.0, TSLS 6.0.1 + TypeScript 6.0.3, LuaLS 3.19.1,
+Pyright 1.1.414 and Ruff 0.16.10 are the initial manifest. TSLS currently needs
+TypeScript **<7**; a declared missing/incompatible project compiler is reported,
+not replaced by an editor compiler. Nearest compatible local TypeScript wins.
+Python `.venv`/`venv` is discovered independently of the Node-based Pyright
+transport, with explicit `VIRTUAL_ENV` fallback. Lua libraries are limited to
+Neovim runtime Lua, not every installed plugin. C#/Rust are syntax-only; Zsh
+uses native syntax and buffer/path completion without Bash diagnostics.
+
+Blink stable 1.10.2 uses native Neovim snippets with no collections. The plugin
+installer explicitly downloads its checked prebuilt matcher; routine startup
+has downloads disabled. `DOTNEOVIM_BLINK_LUA=1` selects the portable Lua fallback.
+Completion never preselects/inserts: select with Ctrl-n/p, accept a selected item
+with Ctrl-y; Enter remains newline. Diagnostic signs are quiet, with explicit
+float/picker and native navigation.
+
 ## Agent setup
 
 Repository-wide agent instructions live in the root [`AGENTS.md`](AGENTS.md); `CLAUDE.md` imports that file. Reusable skills live in [`.agents/skills/`](.agents/skills/), with `.claude/skills/` linking to that directory.

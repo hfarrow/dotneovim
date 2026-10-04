@@ -73,3 +73,13 @@ Markdown `<leader>um` toggles rendered/raw view locally; insert mode shows raw
 syntax. Native `gx` opens links, `]s/[s`, `z=` and `zg` handle spelling. Changing
 filetype cleans local spelling and render mapping; the dictionary source remains
 in the checkout.
+
+## Language editing
+
+Native `K` hover, `grr` references, `grn` rename, `gra` code action and `gri`
+implementation remain available on attached buffers; no short `gr` blocks them.
+`[d/]d` navigate diagnostics, `<C-w>d` or `<leader>df` shows a float,
+`<leader>dd` opens the diagnostic picker. No inline/virtual-line diagnostics.
+Insert Ctrl-n/p selects without insertion, Ctrl-y accepts only a selected item,
+Ctrl-space requests a menu, Ctrl-e hides it. Enter inserts newline; Tab/Shift-Tab
+visit native snippet placeholders when active, otherwise retain ordinary input.

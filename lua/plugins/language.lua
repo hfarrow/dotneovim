@@ -1,0 +1,21 @@
+return {
+  { 'mason-org/mason.nvim', version = '^2', lazy = false, priority = 900,
+    opts = { PATH = 'prepend', registry_cache = { refresh = false }, ui = { check_outdated_packages_on_open = false } } },
+  { 'saghen/blink.cmp', version = 'v1.10.2', lazy = false,
+    opts = {
+      enabled = function() return vim.bo.buftype == '' and not require('config.largefile').check(0) end,
+      keymap = { preset = 'none',
+        ['<C-space>'] = { 'show' }, ['<C-e>'] = { 'hide', 'fallback' },
+        ['<C-n>'] = { 'select_next', 'fallback' }, ['<C-p>'] = { 'select_prev', 'fallback' },
+        ['<C-y>'] = { function(cmp) if cmp.get_selected_item() then return cmp.accept() end; return true end },
+        ['<CR>'] = { 'fallback' }, ['<Tab>'] = { 'snippet_forward', 'fallback' }, ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+      },
+      snippets = { preset = 'default' }, sources = { default = { 'lsp', 'path', 'buffer' } },
+      completion = { list = { selection = { preselect = false, auto_insert = false } }, accept = { auto_brackets = { enabled = false } } },
+      fuzzy = { implementation = vim.env.DOTNEOVIM_BLINK_LUA == '1' and 'lua' or 'prefer_rust',
+        prebuilt_binaries = { download = vim.g.dotneovim_install == true } },
+      cmdline = { enabled = false }, term = { enabled = false },
+    } },
+  { 'neovim/nvim-lspconfig', version = '^2', lazy = false, dependencies = { 'mason.nvim', 'blink.cmp' },
+    config = function() require('config.lsp').setup() end },
+}
