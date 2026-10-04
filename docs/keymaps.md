@@ -53,3 +53,23 @@ renames a full path (move), `c/x/p` copy/cut/paste, `d` deletes with confirmatio
 `R` refreshes and `q` closes. Closing restores the previous editing window.
 Tree local clipboard keys are intentional UI operations. Which-key displays
 described shortcuts after 350 ms; the mapping timeout remains 500 ms.
+
+## Reading and structural editing
+
+`af/if` select outer/inner function, `ac/ic` class and `aa/ia` argument in visual
+or operator mode where queries provide them. Outer function/class is linewise.
+`]m/[m` jump to next/previous function start; `]M/[M` to ends. The equivalent
+`c/C` and `a/A` suffixes navigate classes and arguments. Missing queries retain
+native filetype motions; no swapping or global `;` repeat remap is added.
+
+Surround: `gz{motion}{pair}` adds, `gZ{pair}` surrounds the current line,
+`gzz{motion}{pair}` / `gZZ{pair}` add on new lines, `gzd{pair}` deletes and
+`gzc{old}{new}` changes. Visual `gz/gZ` and insert `<C-g>z/Z` also add surrounds.
+Counts and dot-repeat work. `s` leaps within the window in normal/visual/operator
+mode; normal `S` leaps across windows. These intentionally replace substitutes.
+Typed pairs have one owner; Enter remains newline.
+
+Markdown `<leader>um` toggles rendered/raw view locally; insert mode shows raw
+syntax. Native `gx` opens links, `]s/[s`, `z=` and `zg` handle spelling. Changing
+filetype cleans local spelling and render mapping; the dictionary source remains
+in the checkout.

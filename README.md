@@ -36,6 +36,20 @@ Attached UI checks use `tests/ui.py`: create an isolated Python venv, install
 `msgpack==1.2.3`, then run it with `DOTNEOVIM_TEST_HOME` set as above. This
 exercises an attached Neovim grid and input; terminal appearance checks are separate.
 
+Provision focused syntax parsers explicitly after installing plugins:
+
+```sh
+brew install tree-sitter-cli # >=0.26.1; the tree-sitter library alone has no CLI
+nvim -l scripts/parsers.lua
+```
+
+Parser builds also require a C compiler (macOS Command Line Tools), curl and tar.
+Re-run parser provisioning when deliberately updating the locked Tree-sitter
+plugin: its parser table pins compatible revisions. Normal startup downloads
+nothing. Files over 1 MiB or with a line over 10,000 bytes skip parsing, rainbow,
+Markdown decoration and semantic tooling. Markdown/text spelling uses the
+preserved `spell/en.utf-8.add`; native `zg` updates that dictionary deliberately.
+
 ## Agent setup
 
 Repository-wide agent instructions live in the root [`AGENTS.md`](AGENTS.md); `CLAUDE.md` imports that file. Reusable skills live in [`.agents/skills/`](.agents/skills/), with `.claude/skills/` linking to that directory.

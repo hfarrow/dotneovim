@@ -13,8 +13,8 @@ Branch: `rebuild/neovim-modernization`. Reference: `9746670fb9dc3640969151947b11
 | Phase | Change | Dependencies | Status | Archive | Commit | Evidence / blockers |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | rebuild-terminal-foundation | Approval | Complete | 2026-10-04-rebuild-terminal-foundation | f382bbd | Core/lifecycle/offline/missing-manager checks passed; see archived evidence.md |
-| 2 | rebuild-navigation-dashboard | 1 | Complete | 2026-10-04-rebuild-navigation-dashboard | Recorded in next checkpoint | Real search/tree and attached UI matrix passed; see archived evidence.md |
-| 3 | rebuild-reading-editing | 1, 2 | Pending | — | — | Not run |
+| 2 | rebuild-navigation-dashboard | 1 | Complete | 2026-10-04-rebuild-navigation-dashboard | 3d60756 | Real search/tree and attached UI matrix passed; see archived evidence.md |
+| 3 | rebuild-reading-editing | 1, 2 | Complete | 2026-10-04-rebuild-reading-editing | Recorded in next checkpoint | Real parsers/objects/aids/rendering/guards and attached Leap passed |
 | 4 | rebuild-language-tooling | 1, 3 | Pending | — | — | Not run |
 | 5 | rebuild-project-formatting | 4 | Pending | — | — | Not run |
 | 6 | rebuild-git-terminals | 1, 2 | Pending | — | — | Not run |

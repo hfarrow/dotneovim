@@ -82,6 +82,18 @@ with tempfile.TemporaryDirectory(prefix='dotneovim ui space ') as fixture:
             editor.call('nvim_input', '<C-r>')
             editor.wait("local p=require('telescope.actions.state').get_current_picker(vim.api.nvim_get_current_buf()); return p and p.prompt_title:find('project') ~= nil")
         editor.close()
+    editor = Editor((str(one),))
+    editor.wait('return vim.v.vim_did_enter', 1)
+    editor.lua("vim.api.nvim_buf_set_lines(0,0,-1,false,{'start alpha beta zztarget omega'}); vim.api.nvim_win_set_cursor(0,{1,0})")
+    editor.call('nvim_input', 'szz')
+    editor.wait('return vim.api.nvim_win_get_cursor(0)[2]', 17)
+    editor.call('nvim_input', '<Esc>0vszz<Esc>')
+    time.sleep(.2)
+    assert editor.lua('return vim.api.nvim_win_get_cursor(0)[2]') == 17, 'Visual Leap'
+    editor.call('nvim_input', '0dszz')
+    time.sleep(.3)
+    assert editor.lua("return vim.api.nvim_get_current_line()") in ('zztarget omega', 'ztarget omega'), editor.lua("return vim.api.nvim_get_current_line()")
+    editor.close()
     stdin = subprocess.run(['nvim', '--headless', '-u', str(ROOT / 'init.lua'), '-', '-c',
                             "lua vim.defer_fn(function() assert(vim.bo.filetype ~= 'dashboard'); assert(vim.api.nvim_get_current_line() == 'stdin fixture'); vim.cmd('qa!') end, 100)"],
                            input='stdin fixture\n', text=True, capture_output=True, env=ENV, timeout=5)

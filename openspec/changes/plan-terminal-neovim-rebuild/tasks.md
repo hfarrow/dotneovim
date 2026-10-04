@@ -20,9 +20,9 @@
 
 ## 4. Reading and editing increment
 
-- [ ] 4.1 Propose `rebuild-reading-editing` with `reading-editing` deltas covering focused parsers, local Markdown behavior, structural objects/jumps, surround, pairs, Leap, rainbow delimiters, and large-file exclusions; verify upstream loading/API choices and strict validation.
-- [ ] 4.2 Apply the reading/editing child and document its setup/toggles; verify installed parser/query compatibility, real select/move/surround operations including first use/counts/dot-repeat, pair behavior, raw/rendered Markdown without content changes, spell dictionary preservation, filetype cleanup, and missing-parser/large-file fallback.
-- [ ] 4.3 Archive and commit the reading/editing child after acceptance, updating the ledger; verify recorded plugin/parser revisions, completed child tasks, test evidence, and archive/commit references.
+- [x] 4.1 Propose `rebuild-reading-editing` with `reading-editing` deltas covering focused parsers, local Markdown behavior, structural objects/jumps, surround, pairs, Leap, rainbow delimiters, and large-file exclusions; verify upstream loading/API choices and strict validation.
+- [x] 4.2 Apply the reading/editing child and document its setup/toggles; verify installed parser/query compatibility, real select/move/surround operations including first use/counts/dot-repeat, pair behavior, raw/rendered Markdown without content changes, spell dictionary preservation, filetype cleanup, and missing-parser/large-file fallback.
+- [x] 4.3 Archive and commit the reading/editing child after acceptance, updating the ledger; verify recorded plugin/parser revisions, completed child tasks, test evidence, and archive/commit references.
 
 ## 5. Language tooling increment
 
