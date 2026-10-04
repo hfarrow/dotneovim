@@ -16,9 +16,15 @@ Branch: `rebuild/neovim-modernization`. Reference: `9746670fb9dc3640969151947b11
 | 2 | rebuild-navigation-dashboard | 1 | Complete | 2026-10-04-rebuild-navigation-dashboard | 3d60756 | Real search/tree and attached UI matrix passed; see archived evidence.md |
 | 3 | rebuild-reading-editing | 1, 2 | Complete | 2026-10-04-rebuild-reading-editing | 0a1acf5 | Real parsers/objects/aids/rendering/guards and attached Leap passed |
 | 4 | rebuild-language-tooling | 1, 3 | Complete | 2026-10-04-rebuild-language-tooling | 222a191 | Real managed server handshakes/navigation/ShellCheck and attached completion passed |
-| 5 | rebuild-project-formatting | 4 | Complete | 2026-10-04-rebuild-project-formatting | Recorded in next checkpoint | Real Conform save pipeline, project tools/lint/manual fix, exclusions and failures passed |
-| 6 | rebuild-git-terminals | 1, 2 | Pending | — | — | Not run |
+| 5 | rebuild-project-formatting | 4 | Complete | 2026-10-04-rebuild-project-formatting | 0d497dc | Real Conform save pipeline, project tools/lint/manual fix, exclusions and failures passed |
+| 6 | rebuild-git-terminals | 1, 2 | Complete | 2026-10-04-rebuild-git-terminals | Recorded after commit | Real scratch Git and attached shell/LazyGit lifecycle/cwd/focus/reload passed |
 | 7 | verify-portable-setup | 2–6 | Pending | — | — | Not run |
 | 8 | optimize-terminal-performance | 7 | Pending | — | — | Not run |
 
-Planning validation: strict OpenSpec validation passed before approval. Approved planning checkpoint: `60556a6`. Phases 1–2 implemented and tested in isolation. Phase commits are created only after verified sync/archive; the next checkpoint records each actual prior commit.
+Planning validation: strict OpenSpec validation passed before approval. Approved planning checkpoint: `60556a6`. Phases 1–6 implemented and tested in isolation. Phase commits are created only after verified sync/archive; the next checkpoint records each actual prior commit.
+
+## Phases 2–6 handoff
+
+All child archives contain evidence.md. Reusable validation: `tests/run.lua core|navigation|reading|language|formatting|git|lifecycle|offline`; attached UI: validation/ui-venv/bin/python tests/ui.py with DOTNEOVIM_TEST_HOME. Explicit fixture dependencies installed by scripts/format-fixtures.lua. Actual parser builds use tree-sitter-cli 0.27.0, clang; test-only Python Msgpack 1.2.3 in isolated venv. Managed versions are in config.tools and receipts; local fixture Prettier/Biome/ESLint are exact and npm-locked.
+
+No blockers. Parent phases 7–8 own fresh install, consolidated health/platform paths and shell checks, real clipboard and live Ghostty/cmux appearance, glyph presentation and performance samples. Windows/WSL are not runtime-tested. Portable executable suffixes and local virtualenv paths need their phase 7 review; do not infer cross-platform success from Mac tests. User spell source unchanged. The umbrella stays active/unarchived and is not independently committed as a completed change.

@@ -87,3 +87,23 @@ visit native snippet placeholders when active, otherwise retain ordinary input.
 `<leader>ff` / `:Format` formats explicitly; `:FormatDisable[!]` and
 `:FormatEnable` control save formatting. See [format policy](formatting.md).
 `:LspEslintFixAll` is deliberate lint cleanup; it is never a save hook.
+
+## Git and terminals
+
+`[h/]h` previous/next Git hunk; `<leader>hp` preview, `hs` stage/unstage,
+`hr` reset (discards that hunk), `hb` blame. Visual `hs/hr` act on selected lines;
+`ih` selects a hunk. Structural `[c/]c` stay class motions. Staged signs are enabled;
+continuous inline blame is disabled.
+
+`<leader>th/tv/tf` toggle horizontal/vertical/float shells (ids 1/2/3),
+`<leader>lg` toggles dedicated LazyGit. A different layout hides the previous one.
+Shell processes and their cwd survive hiding, until `exit`. `:TermSelect` exposes
+ordinary Toggleterm instances. LazyGit is an isolated native terminal buffer so
+it can spawn portable argv directly; Toggleterm's command-string shell wrapper
+is not used for LazyGit. Opening a different Git project replaces its hidden job.
+
+Terminal Esc or native `<C-\><C-n>` enters terminal normal mode; Ctrl-h/j/k/l
+navigates splits, Ctrl-g hides the current owned terminal. In terminal normal
+mode leader-lg hides LazyGit; in LazyGit input mode native `q` exits its process.
+Normal leader-lg opens it again. Closing/exiting returns editing focus and checks
+external changes without saving or overwriting modified buffers.

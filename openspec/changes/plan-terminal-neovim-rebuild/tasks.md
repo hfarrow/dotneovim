@@ -38,9 +38,9 @@
 
 ## 7. Git and terminal increment
 
-- [ ] 7.1 Propose `rebuild-git-terminals` with `git-terminal-workflows` deltas for Gitsigns, Toggleterm layouts, dedicated LazyGit lifecycle, focus/exit/navigation, and external-change handling; verify setup/mapping decisions and strict validation.
-- [ ] 7.2 Apply Git/terminal workflows and document binary/shell requirements; verify real scratch-repo hunk navigation/preview, staged/unstaged updates, LazyGit launch/toggle/exit at `<leader>lg`, shell layout toggles, correct cwd/focus, and unmodified-buffer reload after external changes.
-- [ ] 7.3 Archive and commit the Git/terminal child after acceptance, updating the ledger; verify completed tasks, terminal/attached-UI evidence, and archive/commit references.
+- [x] 7.1 Propose `rebuild-git-terminals` with `git-terminal-workflows` deltas for Gitsigns, Toggleterm layouts, dedicated LazyGit lifecycle, focus/exit/navigation, and external-change handling; verify setup/mapping decisions and strict validation.
+- [x] 7.2 Apply Git/terminal workflows and document binary/shell requirements; verify real scratch-repo hunk navigation/preview, staged/unstaged updates, LazyGit launch/toggle/exit at `<leader>lg`, shell layout toggles, correct cwd/focus, and unmodified-buffer reload after external changes.
+- [x] 7.3 Archive and commit the Git/terminal child after acceptance, updating the ledger; verify completed tasks, terminal/attached-UI evidence, and archive/commit references.
 
 ## 8. Portable setup integration increment
 

@@ -4,6 +4,7 @@ dofile(root .. '/init.lua')
 assert(vim.fn.executable('tree-sitter') == 1, 'Install tree-sitter-cli >=0.26.1 (brew install tree-sitter-cli)')
 local parsers = require('config.reading').parsers
 -- update also rebuilds already installed parsers at the locked plugin's revisions.
+require('nvim-treesitter').install(parsers):wait(300000)
 require('nvim-treesitter').update(parsers):wait(300000)
 for _, lang in ipairs(parsers) do
   assert(pcall(vim.treesitter.language.add, lang), 'Parser installation failed: ' .. lang)

@@ -78,6 +78,15 @@ See [project formatting](docs/formatting.md) for save policy, explicit overrides
 missing-tool behavior and manual lint fixes. Re-run explicit tool provisioning
 to install the formatter/ESLint transport manifest additions.
 
+## Git and terminals
+
+Requires Git, a working Neovim `shell` and LazyGit (`brew install lazygit` on
+macOS). Gitsigns attaches to tracked files; Toggleterm supplies persistent shell
+layouts. `<leader>lg` opens a dedicated LazyGit float at the Git/worktree root;
+ordinary shells start at the editing directory and keep their process cwd.
+See [keys](docs/keymaps.md) for hunk actions, layout and terminal-mode exits.
+Return refreshes Git/tree state and reloads only unmodified external changes.
+
 ## Agent setup
 
 Repository-wide agent instructions live in the root [`AGENTS.md`](AGENTS.md); `CLAUDE.md` imports that file. Reusable skills live in [`.agents/skills/`](.agents/skills/), with `.claude/skills/` linking to that directory.
