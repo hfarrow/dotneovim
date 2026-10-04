@@ -65,3 +65,11 @@ Mac clipboard acceptance SHALL exercise the real provider through the configured
 - **WHEN** a fixture yanks via leader-y and pastes via leader-p using the Mac provider
 - **THEN** the system clipboard and buffer contain the expected text, visual replacement preserves its source and ordinary native edits do not change the clipboard
 - **AND** all prior pasteboard items and types are restored after the fixture
+
+### Requirement: Warm file startup budget
+On the tested Mac with provisioned dependencies, warmed median process-launch-to-useful-attached-redraw latency SHALL be at most 100 ms for text, code and Markdown fixtures. Evidence SHALL separately report VimEnter and process lifetime, at least ten samples/scenario, median/p95, environment/revisions and first empty-cache launches without claiming OS-cold measurements.
+
+#### Scenario: File-launch acceptance
+- **WHEN** representative text, code and Markdown fixtures launch repeatedly with a warm editor cache
+- **THEN** each useful content redraw meets the median budget and its full sample distribution is published
+- **AND** minimal and runnable original reference comparisons use the same metric; failures are reported rather than counted as successful baseline timings

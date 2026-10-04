@@ -58,6 +58,7 @@ with tempfile.TemporaryDirectory(prefix='dotneovim ui space ') as fixture:
     editor.close()
     editor = Editor((str(one),))
     editor.wait('return vim.v.vim_did_enter', 1)
+    editor.call('nvim_input', 'i')
     editor.wait("return require('blink.cmp.fuzzy').implementation_type", 'lua' if os.environ.get('DOTNEOVIM_BLINK_LUA') == '1' else 'rust')
     assert 'No fuzzy matching library' not in editor.errors.decode()
     editor.close()

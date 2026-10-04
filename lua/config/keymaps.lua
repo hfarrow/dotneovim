@@ -1,6 +1,17 @@
 local map = vim.keymap.set
 vim.api.nvim_create_user_command('SetupHealth', function() vim.cmd('checkhealth dotneovim') end,
   { desc = 'Check locked plugins, parsers, tools and setup prerequisites' })
+vim.api.nvim_create_user_command('ToolHealth', function()
+  local tools, report = require('config.tools'), {}
+  for name, version in pairs(tools.manifest) do
+    local executable = tools.executable(name)
+    report[#report + 1] = name .. '@' .. version .. ': ' .. (tools.available(executable) and tools.path(executable) or 'MISSING: nvim -l scripts/tools.lua')
+  end
+  vim.notify(table.concat(report, '\n'))
+end, { desc = 'Show managed tool paths and provisioning requirements' })
+vim.diagnostic.config({ virtual_text = false, virtual_lines = false, signs = true, underline = true, update_in_insert = false, severity_sort = true })
+map('n', '<leader>df', vim.diagnostic.open_float, { desc = 'Diagnostic float' })
+map('n', '<leader>dd', '<cmd>Telescope diagnostics<cr>', { desc = 'Diagnostic picker' })
 local function bind(mode, lhs, rhs, desc)
   map(mode, lhs, rhs, { silent = true, desc = desc })
 end

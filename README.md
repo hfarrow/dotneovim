@@ -1,12 +1,14 @@
 # dotneovim
 ## Setup
 
-Requires **Neovim 0.12.5+** and Git. This configuration is being rebuilt in
-incremental OpenSpec changes for standalone terminal Neovim.
+Requires **Neovim 0.12.5+** and Git. This configuration targets standalone terminal
+Neovim; the rebuild was delivered through incremental OpenSpec changes.
 
 See [consolidated setup and restore](docs/setup.md) for the complete provisioning
 order, `:SetupHealth`, platform paths/shells/clipboard, isolation and rollback.
 Windows/WSL are portability-reviewed and runtime-untested.
+See [performance and validation](docs/performance.md) for measured startup,
+first-use latency, large-input guards and repeatable profiling recipes.
 
 Clone this repository and link it at Neovim's config path (`~/.config/nvim` on
 macOS/Linux, `%LOCALAPPDATA%\nvim` on Windows), or start with
@@ -50,7 +52,7 @@ nvim -l scripts/parsers.lua
 Parser builds also require a C compiler (macOS Command Line Tools), curl and tar.
 Re-run parser provisioning when deliberately updating the locked Tree-sitter
 plugin: its parser table pins compatible revisions. Normal startup downloads
-nothing. Files over 1 MiB or with a line over 10,000 bytes skip parsing, rainbow,
+nothing. Files over 1 MiB, 50,000 lines or with a line over 10,000 bytes skip parsing, rainbow,
 Markdown decoration and semantic tooling. Markdown/text spelling uses the
 preserved `spell/en.utf-8.add`; native `zg` updates that dictionary deliberately.
 

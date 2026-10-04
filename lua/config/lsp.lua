@@ -32,7 +32,6 @@ function M.tsserver(dir)
   return vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages', 'typescript-language-server', 'node_modules', 'typescript', 'lib', 'tsserver.js')
 end
 function M.setup()
-  vim.diagnostic.config({ virtual_text = false, virtual_lines = false, signs = true, underline = true, update_in_insert = false, severity_sort = true })
   local capabilities = require('blink.cmp').get_lsp_capabilities()
   vim.lsp.config('*', { capabilities = capabilities, root_dir = root })
   local definitions = {
@@ -75,15 +74,5 @@ function M.setup()
     vim.lsp.config(name, definition)
     if tools.available(tool) then vim.lsp.enable(name) end
   end
-  vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = 'Diagnostic float' })
-  vim.keymap.set('n', '<leader>dd', '<cmd>Telescope diagnostics<cr>', { desc = 'Diagnostic picker' })
-  vim.api.nvim_create_user_command('ToolHealth', function()
-    local report = {}
-    for name, version in pairs(tools.manifest) do
-      local executable = tools.executable(name)
-      report[#report + 1] = name .. '@' .. version .. ': ' .. (tools.available(executable) and tools.path(executable) or 'MISSING: nvim -l scripts/tools.lua')
-    end
-    vim.notify(table.concat(report, '\n'))
-  end, { desc = 'Show managed tool paths and provisioning requirements' })
 end
 return M

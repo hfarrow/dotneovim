@@ -7,7 +7,7 @@ return {
   } },
   { 'HiPhish/rainbow-delimiters.nvim', lazy = false,
     init = function()
-      vim.g.rainbow_delimiters = { strategy = { [''] = function(buf)
+      vim.g.rainbow_delimiters = { blacklist = { 'markdown', 'markdown_inline', 'vimdoc' }, strategy = { [''] = function(buf)
         if require('config.largefile').check(buf) then return nil end
         return require('rainbow-delimiters').strategy['global']
       end } }

@@ -20,8 +20,8 @@ Branch: `rebuild/neovim-modernization`. Reference: `9746670fb9dc3640969151947b11
 | 4 | rebuild-language-tooling | 1, 3 | Complete | 2026-10-04-rebuild-language-tooling | 222a191 | Real managed server handshakes/navigation/ShellCheck and attached completion passed |
 | 5 | rebuild-project-formatting | 4 | Complete | 2026-10-04-rebuild-project-formatting | 0d497dc | Real Conform save pipeline, project tools/lint/manual fix, exclusions and failures passed |
 | 6 | rebuild-git-terminals | 1, 2 | Complete | 2026-10-04-rebuild-git-terminals | c42979f | Real scratch Git and attached shell/LazyGit lifecycle/cwd/focus/reload passed |
-| 7 | verify-portable-setup | 2–6 | Complete | 2026-10-04-verify-portable-setup | Recorded after commit | Fresh restore/suites/clipboard, actual native dark/light/live and screenshots passed; normal runtime provisioned |
-| 8 | optimize-terminal-performance | 7 | Pending | — | — | Not run |
+| 7 | verify-portable-setup | 2–6 | Complete | 2026-10-04-verify-portable-setup | 759f95d | Fresh restore/suites/clipboard, actual native dark/light/live and screenshots passed; normal runtime provisioned |
+| 8 | optimize-terminal-performance | 7 | Complete | 2026-10-04-optimize-terminal-performance | Recorded after commit | 20 warm samples/scenario/action; 100/150-ms medians passed, large-input/final suites/actual Mac acceptance passed |
 
 Planning validation: strict OpenSpec validation passed before approval. Approved planning checkpoint: `60556a6`. Phases 1–6 implemented and tested in isolation. Phase commits are created only after verified sync/archive; the next checkpoint records each actual prior commit.
 
@@ -31,4 +31,6 @@ All child archives contain evidence.md. Reusable validation: `tests/run.lua core
 
 Phase 7 completed after subsequent authorized appearance switching. Actual native dark/light startup, light→dark→light live updates and derived highlights passed; actual window screenshots visually inspected. Original light setting and absent automatic/style keys restored; terminal config unchanged; test workspace cleaned and original workspace restored. See archived phase 7 evidence for initial blocker and resolution. Normal runtime plugins/parsers/tools explicitly provisioned and default startup/health passed; legacy data retained.
 
-Phase 8 now owns performance samples/tuning and final acceptance. Windows/WSL reviewed only, runtime-untested. Spell and IdeaVim source unchanged. Umbrella remains active until all final checks and phase 8 delivery complete.
+Phase 8 completed measured tuning and full final acceptance. Warm useful-redraw median/p95 ms: empty 69.52/72.21, directory 76.64/80.08, explicit dashboard 75.76/78.11, text 67.33/70.50, code 82.77/84.51, Markdown 88.35/94.38 (20 samples each). First tree/picker/completion/shell medians 34.25/90.99/26.27/43.85 ms. No relaxed budgets. Empty-editor-cache results labeled separately; original attached reference fails current APIs/dashboard and is not a valid baseline. Native appearance/clipboard restoration and all final suites passed after optimization; raw data and tradeoffs in phase 8 archive/docs/performance.md.
+
+Windows/WSL reviewed only, runtime-untested. Spell and IdeaVim source unchanged. Normal runtime is installed/healthy. All implementation checkpoints were archived before commits; umbrella finalization follows phase 8 commit.

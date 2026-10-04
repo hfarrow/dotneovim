@@ -7,6 +7,10 @@ local env = {
 }
 local args = { 'nvim', '--headless', '-u', root .. '/init.lua' }
 local test = arg[1] or 'core'
+if test == 'routine' then
+  table.insert(args, 2, '--cmd')
+  table.insert(args, 3, "lua vim.g.dotneovim_process_audit={}; local original=vim.system; vim.system=function(args,...) local calls=vim.g.dotneovim_process_audit; calls[#calls+1]=args; vim.g.dotneovim_process_audit=calls; return original(args,...) end")
+end
 if test == 'lifecycle' then
   local sentinel = base .. '/data/nvim/site/pack/legacy/start/sentinel/plugin'
   vim.fn.mkdir(sentinel, 'p')
