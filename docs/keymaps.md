@@ -83,3 +83,7 @@ implementation remain available on attached buffers; no short `gr` blocks them.
 Insert Ctrl-n/p selects without insertion, Ctrl-y accepts only a selected item,
 Ctrl-space requests a menu, Ctrl-e hides it. Enter inserts newline; Tab/Shift-Tab
 visit native snippet placeholders when active, otherwise retain ordinary input.
+
+`<leader>ff` / `:Format` formats explicitly; `:FormatDisable[!]` and
+`:FormatEnable` control save formatting. See [format policy](formatting.md).
+`:LspEslintFixAll` is deliberate lint cleanup; it is never a save hook.

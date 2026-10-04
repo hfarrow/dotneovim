@@ -32,9 +32,9 @@
 
 ## 6. Project formatting increment
 
-- [ ] 6.1 Propose `rebuild-project-formatting` with `project-formatting` deltas for project-pinned tools, nearest-package/monorepo policies, save format-only behavior, explicit lint fixes, missing-tool handling, and opt-outs; verify fixture cases and strict validation.
-- [ ] 6.2 Apply Conform and project-scoped Biome/ESLint integrations, documenting policy and explicit fix commands; verify actual format-on-save and manual formatting for supported files, no save-triggered lint/import fixes, no automatic Markdown/text/log/Zsh/C#/Rust changes, project versions/configs, ambiguous/missing formatter feedback, timeout/failure preservation, and opt-outs.
-- [ ] 6.3 Archive and commit the formatting child after acceptance, updating the ledger; verify completed tasks, executable formatter/lint evidence alongside policy fixtures, and archive/commit references.
+- [x] 6.1 Propose `rebuild-project-formatting` with `project-formatting` deltas for project-pinned tools, nearest-package/monorepo policies, save format-only behavior, explicit lint fixes, missing-tool handling, and opt-outs; verify fixture cases and strict validation.
+- [x] 6.2 Apply Conform and project-scoped Biome/ESLint integrations, documenting policy and explicit fix commands; verify actual format-on-save and manual formatting for supported files, no save-triggered lint/import fixes, no automatic Markdown/text/log/Zsh/C#/Rust changes, project versions/configs, ambiguous/missing formatter feedback, timeout/failure preservation, and opt-outs.
+- [x] 6.3 Archive and commit the formatting child after acceptance, updating the ledger; verify completed tasks, executable formatter/lint evidence alongside policy fixtures, and archive/commit references.
 
 ## 7. Git and terminal increment
 

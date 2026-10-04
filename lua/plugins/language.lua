@@ -17,5 +17,5 @@ return {
       cmdline = { enabled = false }, term = { enabled = false },
     } },
   { 'neovim/nvim-lspconfig', version = '^2', lazy = false, dependencies = { 'mason.nvim', 'blink.cmp' },
-    config = function() require('config.lsp').setup() end },
+    config = function() require('config.lsp').setup(); require('config.lint').setup() end },
 }

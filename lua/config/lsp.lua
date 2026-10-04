@@ -12,7 +12,7 @@ function M.python(root)
   return vim.fn.exepath('python3')
 end
 local function root(buf, on_dir)
-  if require('config.largefile').check(buf) then return end
+  if vim.api.nvim_buf_get_name(buf) == '' or require('config.largefile').check(buf) then return end
   on_dir(require('config.project').root(require('config.project').directory(buf)) or require('config.project').directory(buf))
 end
 function M.tsserver(dir)
@@ -40,7 +40,7 @@ function M.setup()
     } } },
     ts_ls = { tool = 'typescript-language-server', args = { '--stdio' },
       root_dir = function(buf, cb)
-        if require('config.largefile').check(buf) then return end
+        if vim.api.nvim_buf_get_name(buf) == '' or require('config.largefile').check(buf) then return end
         local dir = require('config.project').directory(buf)
         local compiler, err = M.tsserver(dir)
         if err then vim.notify(err, vim.log.levels.WARN); return end
@@ -78,7 +78,10 @@ function M.setup()
   vim.keymap.set('n', '<leader>dd', '<cmd>Telescope diagnostics<cr>', { desc = 'Diagnostic picker' })
   vim.api.nvim_create_user_command('ToolHealth', function()
     local report = {}
-    for name, version in pairs(tools.manifest) do report[#report + 1] = name .. '@' .. version .. ': ' .. (tools.available(name) and tools.path(name) or 'MISSING: nvim -l scripts/tools.lua') end
+    for name, version in pairs(tools.manifest) do
+      local executable = tools.executable(name)
+      report[#report + 1] = name .. '@' .. version .. ': ' .. (tools.available(executable) and tools.path(executable) or 'MISSING: nvim -l scripts/tools.lua')
+    end
     vim.notify(table.concat(report, '\n'))
   end, { desc = 'Show managed tool paths and provisioning requirements' })
 end

@@ -74,6 +74,10 @@ Completion never preselects/inserts: select with Ctrl-n/p, accept a selected ite
 with Ctrl-y; Enter remains newline. Diagnostic signs are quiet, with explicit
 float/picker and native navigation.
 
+See [project formatting](docs/formatting.md) for save policy, explicit overrides,
+missing-tool behavior and manual lint fixes. Re-run explicit tool provisioning
+to install the formatter/ESLint transport manifest additions.
+
 ## Agent setup
 
 Repository-wide agent instructions live in the root [`AGENTS.md`](AGENTS.md); `CLAUDE.md` imports that file. Reusable skills live in [`.agents/skills/`](.agents/skills/), with `.claude/skills/` linking to that directory.
