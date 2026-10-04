@@ -951,7 +951,10 @@ autocmd('BufWritePost', {
 
 local packer_bootstrap = ensure_packer()
 local packer = require('packer')
-packer.init({ luarocks = { python_cmd = 'python3' } })
+packer.init({ 
+  compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
+  luarocks = { python_cmd = 'python3' } 
+})
 return packer.startup(function(use, use_rocks)
 
   local luarocks = require('packer.luarocks')
