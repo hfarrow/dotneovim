@@ -3,13 +3,13 @@
 ## 1. Approval and execution setup
 
 - [x] 1.1 Obtain explicit approval of this roadmap for execution and record the approved scope and authorization in an execution ledger; verify that approval occurs after the proposal is presented and before runtime changes.
-- [ ] 1.2 Commit the approved planning artifacts on `rebuild/neovim-modernization` after inspecting status, diff, and recent history; verify only intended planning files are staged and the reference worktree still points to `9746670`.
-- [ ] 1.3 Create the execution ledger with child-change names, dependencies, archive paths, commit IDs, validation results, and blockers; verify every phase in design section 8 has a pending entry and no unperformed checks are marked passed.
+- [x] 1.2 Commit the approved planning artifacts on `rebuild/neovim-modernization` after inspecting status, diff, and recent history; verify only intended planning files are staged and the reference worktree still points to `9746670`.
+- [x] 1.3 Create the execution ledger with child-change names, dependencies, archive paths, commit IDs, validation results, and blockers; verify every phase in design section 8 has a pending entry and no unperformed checks are marked passed.
 
 ## 2. Terminal foundation increment
 
-- [ ] 2.1 Propose `rebuild-terminal-foundation` with `terminal-core` and `plugin-lifecycle` deltas, baseline/isolation tasks, setup prerequisites, and precise register/save/reload/wrap scenarios; verify complete artifacts and strict OpenSpec validation before apply.
-- [ ] 2.2 Apply the foundation child, replacing the legacy runtime loader with modular core configuration, lazy.nvim, the theme, and a tested lockfile; verify Lua syntax, isolated headless/core behavior, first bootstrap and provisioned offline startup, and deliver its setup/mapping documentation.
+- [x] 2.1 Propose `rebuild-terminal-foundation` with `terminal-core` and `plugin-lifecycle` deltas, baseline/isolation tasks, setup prerequisites, and precise register/save/reload/wrap scenarios; verify complete artifacts and strict OpenSpec validation before apply.
+- [x] 2.2 Apply the foundation child, replacing the legacy runtime loader with modular core configuration, lazy.nvim, the theme, and a tested lockfile; verify Lua syntax, isolated headless/core behavior, first bootstrap and provisioned offline startup, and deliver its setup/mapping documentation.
 - [ ] 2.3 Finalize the foundation child only after its required checks pass: archive/sync deltas, commit intended files, and update the ledger; verify archive path, commit ID, recorded baseline measurements, and completed child tasks.
 
 ## 3. Navigation and dashboard increment

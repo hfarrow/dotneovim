@@ -1,8 +1,34 @@
 # dotneovim
-## Prerequisites
-- Many external binaries must installed manually through the system package manager. The configs do not automatically install external dependencies. This allows the system package manager to keep such dependencies up to date more easily.
-  - See [this guide](https://gist.github.com/hfarrow/bc40bbef99019ae093b9f721db174070) for likely packages to install
-  - TODO: make this README list required packages
+## Setup
+
+Requires **Neovim 0.12.5+** and Git. This configuration is being rebuilt in
+incremental OpenSpec changes for standalone terminal Neovim.
+
+Clone this repository and link it at Neovim's config path (`~/.config/nvim` on
+macOS/Linux, `%LOCALAPPDATA%\nvim` on Windows), or start with
+`nvim -u /path/to/dotneovim/init.lua`. Paths are resolved from the checkout.
+
+Install the locked plugin set explicitly, from the repository root:
+
+```sh
+nvim -l scripts/install.lua
+```
+
+Normal startup does not install/update plugins. `:Lazy` manages plugins; updates
+are deliberate, with tested revisions tracked in `lazy-lock.json`. The installer
+restores that lockfile, including the manager. Historical Packer installations
+are left on disk and no longer auto-loaded.
+
+Gruvbox Material matches the current terminal palette. Compatible terminals can
+select light/dark appearance natively; `:Appearance light` / `dark` overrides it.
+See [the keymap guide](docs/keymaps.md) for clipboard and core editing behavior.
+
+For isolated macOS checks, set `XDG_CONFIG_HOME`, `XDG_DATA_HOME`,
+`XDG_STATE_HOME`, and `XDG_CACHE_HOME` to subdirectories of a temporary environment
+and run the installer. Then run `DOTNEOVIM_TEST_HOME=/path/to/environment nvim -l
+tests/run.lua core` (the harness applies those paths and bounds test runtime).
+Do not share test state with your normal Neovim data. Additional language/parser
+dependencies are documented as their increments land.
 
 ## Agent setup
 
