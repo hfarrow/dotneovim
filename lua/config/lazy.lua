@@ -10,7 +10,7 @@ local lazy = require('lazy')
 lazy.setup({ { import = 'plugins' } }, {
   lockfile = vim.fs.joinpath(vim.g.dotneovim_root, 'lazy-lock.json'),
   defaults = { lazy = true },
-  install = { missing = vim.g.dotneovim_install == true, colorscheme = { 'gruvbox-material' } },
+  install = { missing = false, colorscheme = { 'gruvbox-material' } },
   checker = { enabled = false },
   change_detection = { enabled = false, notify = false },
   performance = { rtp = { reset = false } },

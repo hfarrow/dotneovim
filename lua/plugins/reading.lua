@@ -29,6 +29,9 @@ return {
       vim.keymap.set('n', 'S', '<Plug>(leap-from-window)', { desc = 'Leap across windows' })
     end },
   { 'MeanderingProgrammer/render-markdown.nvim', version = '^8', ft = 'markdown',
+    -- Load before ordinary Markdown FileType so lazy's replay cannot execute
+    -- native Markdown undo/unmap twice during first file startup (E31).
+    event = { 'BufReadPre *.md,*.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn', 'BufNewFile *.md,*.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn' },
     dependencies = { 'nvim-treesitter', 'nvim-web-devicons' }, opts = {
       file_types = { 'markdown' }, render_modes = { 'n' }, max_file_size = 1,
       ignore = function(buf) return require('config.largefile').check(buf) end,

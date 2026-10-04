@@ -7,6 +7,13 @@ local env = {
 }
 local args = { 'nvim', '--headless', '-u', root .. '/init.lua' }
 local test = arg[1] or 'core'
+if test == 'lifecycle' then
+  local sentinel = base .. '/data/nvim/site/pack/legacy/start/sentinel/plugin'
+  vim.fn.mkdir(sentinel, 'p')
+  vim.fn.writefile({ 'vim.g.unmanaged_legacy_loaded = true' }, sentinel .. '/sentinel.lua')
+elseif test == 'offline' then
+  env.HTTP_PROXY, env.HTTPS_PROXY, env.ALL_PROXY = 'http://127.0.0.1:9', 'http://127.0.0.1:9', 'http://127.0.0.1:9'
+end
 args[#args + 1] = '-c'
 args[#args + 1] = "lua local ok, err = pcall(dofile, " .. string.format('%q', root .. '/tests/' .. test .. '.lua') .. "); if not ok then print(err); vim.cmd('cquit 1') end"
 local result = vim.system(args, { env = env, text = true }):wait(30000)

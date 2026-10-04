@@ -1,1 +1,2 @@
 .agents/tools/node_modules/
+tests/__pycache__/

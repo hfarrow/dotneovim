@@ -38,6 +38,7 @@ return {
       { '<leader>E', '<cmd>NvimTreeFindFile<cr>', desc = 'Reveal current file' },
     },
     opts = {
+      hijack_netrw = false, -- Core startup disables netrw before plugin loading.
       hijack_directories = { enable = false }, sync_root_with_cwd = false,
       actions = { change_dir = { enable = false } },
       view = { width = 34 }, renderer = { group_empty = true },

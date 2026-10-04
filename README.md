@@ -4,6 +4,10 @@
 Requires **Neovim 0.12.5+** and Git. This configuration is being rebuilt in
 incremental OpenSpec changes for standalone terminal Neovim.
 
+See [consolidated setup and restore](docs/setup.md) for the complete provisioning
+order, `:SetupHealth`, platform paths/shells/clipboard, isolation and rollback.
+Windows/WSL are portability-reviewed and runtime-untested.
+
 Clone this repository and link it at Neovim's config path (`~/.config/nvim` on
 macOS/Linux, `%LOCALAPPDATA%\nvim` on Windows), or start with
 `nvim -u /path/to/dotneovim/init.lua`. Paths are resolved from the checkout.

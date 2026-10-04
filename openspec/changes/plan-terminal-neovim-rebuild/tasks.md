@@ -44,9 +44,9 @@
 
 ## 8. Portable setup integration increment
 
-- [ ] 8.1 Propose `verify-portable-setup` against the now-existing capability specs with fresh-install, health, path/shell/clipboard, and appearance integration scenarios; verify deltas update their owning capabilities and strict validation.
-- [ ] 8.2 Apply any necessary integration/setup fixes and consolidate macOS/Windows/WSL documentation; verify fresh isolated provisioning and locked restore, provisioned offline startup, full startup matrix, executable health checks, macOS clipboard, and actual cmux/Ghostty light/dark startup and live switching; explicitly distinguish Windows/WSL review from unperformed runtime tests.
-- [ ] 8.3 Archive and commit the portable-setup child after acceptance, updating the ledger; verify all required Mac checks, documented remaining platform checks, completed tasks, and archive/commit references.
+- [x] 8.1 Propose `verify-portable-setup` against the now-existing capability specs with fresh-install, health, path/shell/clipboard, and appearance integration scenarios; verify deltas update their owning capabilities and strict validation.
+- [x] 8.2 Apply any necessary integration/setup fixes and consolidate macOS/Windows/WSL documentation; verify fresh isolated provisioning and locked restore, provisioned offline startup, full startup matrix, executable health checks, macOS clipboard, and actual cmux/Ghostty light/dark startup and live switching; explicitly distinguish Windows/WSL review from unperformed runtime tests.
+- [x] 8.3 Archive and commit the portable-setup child after acceptance, updating the ledger; verify all required Mac checks, documented remaining platform checks, completed tasks, and archive/commit references.
 
 ## 9. Performance and final acceptance increment
 

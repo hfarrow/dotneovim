@@ -6,6 +6,8 @@ local parsers = require('config.reading').parsers
 -- update also rebuilds already installed parsers at the locked plugin's revisions.
 require('nvim-treesitter').install(parsers):wait(300000)
 require('nvim-treesitter').update(parsers):wait(300000)
+-- Queries requested during first setup can have cached a missing result.
+vim.treesitter.query.get:clear()
 for _, lang in ipairs(parsers) do
   assert(pcall(vim.treesitter.language.add, lang), 'Parser installation failed: ' .. lang)
   assert(vim.treesitter.query.get(lang, 'highlights'), 'Missing highlight queries: ' .. lang)

@@ -1,68 +1,10 @@
 """Real attached UI and RPC input. Requires msgpack in an isolated test venv."""
 import os
 import pathlib
-import select
 import subprocess
 import tempfile
 import time
-import msgpack
-
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-BASE = pathlib.Path(os.environ['DOTNEOVIM_TEST_HOME'])
-ENV = dict(os.environ, **{f'XDG_{k}_HOME': str(BASE / k.lower()) for k in ['CONFIG', 'DATA', 'STATE', 'CACHE']})
-
-
-class Editor:
-    def __init__(self, args=()):
-        self.p = subprocess.Popen(['nvim', '--embed', '-u', str(ROOT / 'init.lua'), *args],
-                                  stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=ENV)
-        self.unpack = msgpack.Unpacker(raw=False)
-        self.serial = 0
-        self.redraws = []
-        self.errors = b''
-        self.messages = []
-        self.call('nvim_ui_attach', 160, 50, {'rgb': True, 'ext_linegrid': True, 'ext_messages': True})
-
-    def call(self, method, *args):
-        self.serial += 1
-        ident = self.serial
-        self.p.stdin.write(msgpack.packb([0, ident, method, args]))
-        self.p.stdin.flush()
-        deadline = time.monotonic() + 10
-        while time.monotonic() < deadline:
-            for message in self.unpack:
-                self.messages.append(message if message[0] != 2 or message[1] != 'redraw' else [2, 'redraw'])
-                if message[0] == 2 and message[1] == 'redraw':
-                    self.redraws.extend(message[2])
-                    for event in message[2]:
-                        if event[0] == 'msg_show':
-                            self.errors += repr(event).encode()
-                if message[0] == 1 and message[1] == ident:
-                    assert message[2] is None, message[2]
-                    return message[3]
-            readable = select.select([self.p.stdout, self.p.stderr], [], [], .1)[0]
-            if self.p.stderr in readable:
-                self.errors += os.read(self.p.stderr.fileno(), 65536)
-            if self.p.stdout in readable:
-                data = os.read(self.p.stdout.fileno(), 65536)
-                assert data, self.p.stderr.read().decode()
-                self.unpack.feed(data)
-        raise AssertionError(f'RPC timeout: {method}: {self.errors.decode()}: {self.messages[-10:]}')
-
-    def lua(self, code):
-        return self.call('nvim_exec_lua', code, [])
-
-    def wait(self, code, expected=True):
-        deadline = time.monotonic() + 5
-        while time.monotonic() < deadline:
-            if self.lua(code) == expected:
-                return
-            time.sleep(.03)
-        raise AssertionError(code)
-
-    def close(self):
-        self.lua("vim.schedule(function() vim.cmd('qa!') end)")
-        assert self.p.wait(timeout=5) == 0, self.p.stderr.read().decode()
+from ui_client import Editor, ENV, ROOT
 
 
 with tempfile.TemporaryDirectory(prefix='dotneovim ui space ') as fixture:
@@ -70,14 +12,25 @@ with tempfile.TemporaryDirectory(prefix='dotneovim ui space ') as fixture:
     two = pathlib.Path(fixture) / 'two.txt'
     one.write_text('hello world\n')
     two.write_text('second\n')
+    code = pathlib.Path(fixture) / 'fixture.lua'
+    markdown = pathlib.Path(fixture) / 'fixture.md'
+    code.write_text('local value = 1\nprint(value)\n')
+    markdown.write_text('# Reading fixture\n\n**Readable prose** and `code`.\n')
     for args, dashboard in [((), True), ((fixture,), True), ((str(one),), False),
-                            ((str(one), str(two)), False), ((fixture + '/COMMIT_EDITMSG',), False)]:
+                            ((str(one), str(two)), False), ((fixture + '/COMMIT_EDITMSG',), False),
+                            ((str(code),), False), ((str(markdown),), False)]:
         editor = Editor(args)
         editor.wait('return vim.v.vim_did_enter', 1)
         time.sleep(.3)
         assert (editor.lua('return vim.bo.filetype') == 'dashboard') == dashboard, args
-        assert editor.lua('return vim.v.errmsg') == ''
+        assert editor.lua('return vim.v.errmsg') == '', (args, editor.lua('return vim.v.errmsg'), editor.errors.decode())
         assert any(event[0] == 'grid_line' for event in editor.redraws), 'Attached grid drawn'
+        if args == (str(code),):
+            assert editor.lua('return vim.bo.filetype') == 'lua'
+            assert editor.lua('return vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] ~= nil')
+        if args == (str(markdown),):
+            assert editor.lua('return vim.bo.filetype') == 'markdown'
+            assert editor.lua('return vim.wo.wrap and vim.wo.spell')
         if dashboard:
             assert editor.lua("return table.concat(vim.api.nvim_buf_get_lines(0,0,-1,false)):find('███') ~= nil")
             editor.call('nvim_input', 'e')
@@ -102,6 +55,11 @@ with tempfile.TemporaryDirectory(prefix='dotneovim ui space ') as fixture:
     editor.call('nvim_input', '0dszz')
     time.sleep(.3)
     assert editor.lua("return vim.api.nvim_get_current_line()") in ('zztarget omega', 'ztarget omega'), editor.lua("return vim.api.nvim_get_current_line()")
+    editor.close()
+    editor = Editor((str(one),))
+    editor.wait('return vim.v.vim_did_enter', 1)
+    editor.wait("return require('blink.cmp.fuzzy').implementation_type", 'lua' if os.environ.get('DOTNEOVIM_BLINK_LUA') == '1' else 'rust')
+    assert 'No fuzzy matching library' not in editor.errors.decode()
     editor.close()
     subprocess.run(['git', '-C', fixture, 'init', '--quiet'], check=True)
     subprocess.run(['git', '-C', fixture, 'add', 'one.txt', 'two.txt'], check=True)

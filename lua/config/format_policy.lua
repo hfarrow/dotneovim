@@ -54,8 +54,9 @@ function M.local_tool(tool, dirs, declared)
       return path, nil, metadata.version
     end
     if not packages[tool] then
-      for _, candidate in ipairs({ dir .. '/.venv/bin/' .. tool, dir .. '/venv/bin/' .. tool,
-        dir .. '/.venv/Scripts/' .. tool .. '.exe', dir .. '/bin/' .. tool }) do
+      local tools = require('config.tools')
+      for _, candidate in ipairs({ tools.venv_executable(vim.fs.joinpath(dir, '.venv'), tool),
+        tools.venv_executable(vim.fs.joinpath(dir, 'venv'), tool), vim.fs.joinpath(dir, 'bin', tool .. tools.suffix(tool)) }) do
         if vim.fn.executable(candidate) == 1 then
           if declared then
             if not version_ok({ candidate }, declared) then return nil, 'Project ' .. tool .. ' version mismatch: expected ' .. declared end

@@ -2,14 +2,15 @@ local M = {}
 local tools = require('config.tools')
 function M.python(root)
   for _, dir in ipairs({ '.venv', 'venv' }) do
-    local path = vim.fs.joinpath(root, dir, vim.fn.has('win32') == 1 and 'Scripts/python.exe' or 'bin/python')
+    local path = tools.venv_executable(vim.fs.joinpath(root, dir), 'python')
     if vim.fn.executable(path) == 1 then return path end
   end
   if vim.env.VIRTUAL_ENV then
-    local path = vim.fs.joinpath(vim.env.VIRTUAL_ENV, vim.fn.has('win32') == 1 and 'Scripts/python.exe' or 'bin/python')
+    local path = tools.venv_executable(vim.env.VIRTUAL_ENV, 'python')
     if vim.fn.executable(path) == 1 then return path end
   end
-  return vim.fn.exepath('python3')
+  local python = vim.fn.exepath('python3')
+  return python ~= '' and python or vim.fn.exepath('python')
 end
 local function root(buf, on_dir)
   if vim.api.nvim_buf_get_name(buf) == '' or require('config.largefile').check(buf) then return end

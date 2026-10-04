@@ -1,4 +1,6 @@
 local map = vim.keymap.set
+vim.api.nvim_create_user_command('SetupHealth', function() vim.cmd('checkhealth dotneovim') end,
+  { desc = 'Check locked plugins, parsers, tools and setup prerequisites' })
 local function bind(mode, lhs, rhs, desc)
   map(mode, lhs, rhs, { silent = true, desc = desc })
 end

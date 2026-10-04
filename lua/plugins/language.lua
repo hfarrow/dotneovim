@@ -12,7 +12,7 @@ return {
       },
       snippets = { preset = 'default' }, sources = { default = { 'lsp', 'path', 'buffer' } },
       completion = { list = { selection = { preselect = false, auto_insert = false } }, accept = { auto_brackets = { enabled = false } } },
-      fuzzy = { implementation = vim.env.DOTNEOVIM_BLINK_LUA == '1' and 'lua' or 'prefer_rust',
+      fuzzy = { implementation = (vim.g.dotneovim_install or vim.env.DOTNEOVIM_BLINK_LUA == '1') and 'lua' or 'prefer_rust',
         prebuilt_binaries = { download = vim.g.dotneovim_install == true } },
       cmdline = { enabled = false }, term = { enabled = false },
     } },

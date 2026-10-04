@@ -13,16 +13,37 @@ run({ 'git', '-C', path, 'checkout', lock['lazy.nvim'].commit })
 vim.g.dotneovim_install = true
 vim.o.loadplugins = true
 dofile(vim.fs.joinpath(root, 'init.lua'))
-require('lazy').install({ wait = true })
+-- Install/restore normally rewrites the lock from currently installed commits;
+-- suppress that in this explicit restore-only process, including drifted HEADs.
+-- User-initiated Lazy updates in a later normal process retain upstream behavior.
+local manager_lock = require('lazy.manage.lock')
+manager_lock.lock, manager_lock._loaded = vim.deepcopy(lock), true
+manager_lock.update = function() end
+require('lazy').install({ wait = true, lockfile = true })
 require('lazy').restore({ wait = true })
 for _, plugin in ipairs(require('lazy').plugins()) do
   assert(vim.uv.fs_stat(plugin.dir), 'Installation failed: ' .. plugin.name)
   for _, task in ipairs(plugin._.tasks or {}) do assert(not task:has_errors(), 'Plugin task failed: ' .. plugin.name) end
+  if lock[plugin.name] then
+    local result = vim.system({ 'git', '-C', plugin.dir, 'rev-parse', 'HEAD' }, { text = true }):wait()
+    assert(result.code == 0 and vim.trim(result.stdout) == lock[plugin.name].commit, 'Locked restore failed: ' .. plugin.name)
+  end
 end
 if require('lazy.core.config').plugins['blink.cmp'] then
-  local done, failure = false, nil
-  require('blink.cmp.fuzzy.download').ensure_downloaded(function(err) failure, done = err, true end)
+  -- Setup used Lua to avoid racing its asynchronous download with this one.
+  require('blink.cmp.config').fuzzy.implementation = vim.env.DOTNEOVIM_BLINK_LUA == '1' and 'lua' or 'rust'
+  local done, failure, implementation = false, nil, nil
+  require('blink.cmp.fuzzy.download').ensure_downloaded(function(err, matcher) failure, implementation, done = err, matcher, true end)
   assert(vim.wait(120000, function() return done end, 50), 'Blink matcher provisioning timed out')
   assert(not failure, failure)
+  if vim.env.DOTNEOVIM_BLINK_LUA ~= '1' then
+    assert(implementation == 'rust', 'Prebuilt matcher unavailable; explicitly use DOTNEOVIM_BLINK_LUA=1 for the Lua fallback')
+    assert(pcall(require, 'blink.cmp.fuzzy.rust'), 'Provisioned Blink matcher cannot load')
+    -- Blink checks a commit receipt before its download-disabled branch, but a
+    -- release-tag receipt only afterwards. Record the checked locked commit so
+    -- routine startup recognizes the verified binary without enabling downloads.
+    local files = require('blink.cmp.fuzzy.download.files')
+    vim.fn.writefile({ lock['blink.cmp'].commit }, files.version_path, 'b')
+  end
 end
 print('Plugin provisioning complete. Restart Neovim.')
