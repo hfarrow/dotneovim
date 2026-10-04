@@ -27,14 +27,27 @@ manual override for terminals without automatic background detection.
 # Navigation
 
 Plain `nvim` / `nvim .` show Hyper; file, stdin, commit and multi-file launches edit
-normally. Dashboard `f/F/a` search normal/hidden/all files, `/` greps, `;` opens
-recent files, `c` edits this checkout and `e` toggles the tree.
+normally. Dashboard `f/F/a` search normal/hidden/all files, `/` searches normal
+contents, `;` opens recent files, `c` edits this checkout and `e` toggles the tree.
+The global paired shortcuts below also work from the dashboard.
+
+All six file/content searches use Space-f followed by a mode key. The unshifted
+key finds filenames; its Shift counterpart searches contents (on a US keyboard,
+`"` is Shift-`'`). Hidden includes normal and hidden files while respecting
+ignores; All additionally includes ignored files, always excluding `.git` internals.
+
+| Visibility | Find filenames | Search contents |
+| --- | --- | --- |
+| Normal | `<leader>f'` | `<leader>f"` |
+| Hidden | `<leader>fg` | `<leader>fG` |
+| All, including ignored | `<leader>fa` | `<leader>fA` |
+
+Migration: old Space-`'` becomes Space-f`'`; old Space-fh becomes Space-fg;
+old Space-fg (normal grep) becomes Space-f`"`. The retired keys have no aliases.
 
 | Key | Action |
 | --- | --- |
 | `<leader>e` / `<leader>E` | Toggle tree / reveal file |
-| `<leader>'`, `fh`, `fa` | Normal / hidden / all filename search |
-| `<leader>fg`, `fG`, `fA` | Normal / hidden / all content search |
 | `<leader>fp` | Project-root normal files |
 | `<leader>;`, `fb`, `/` | Recent files / buffers / current-buffer search |
 | Picker `<C-v>` / `<C-r>` | Cycle visibility / directory-project scope |
