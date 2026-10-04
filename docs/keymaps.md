@@ -24,3 +24,32 @@ the paste source.
 Save explicitly with `:write`; focus and buffer changes do not save. Prose wraps
 visually without rewriting lines. `:Appearance light` or `:Appearance dark` is a
 manual override for terminals without automatic background detection.
+# Navigation
+
+Plain `nvim` / `nvim .` show Hyper; file, stdin, commit and multi-file launches edit
+normally. Dashboard `f/F/a` search normal/hidden/all files, `/` greps, `;` opens
+recent files, `c` edits this checkout and `e` toggles the tree.
+
+| Key | Action |
+| --- | --- |
+| `<leader>e` / `<leader>E` | Toggle tree / reveal file |
+| `<leader>'`, `fh`, `fa` | Normal / hidden / all filename search |
+| `<leader>fg`, `fG`, `fA` | Normal / hidden / all content search |
+| `<leader>fp` | Project-root normal files |
+| `<leader>;`, `fb`, `/` | Recent files / buffers / current-buffer search |
+| Picker `<C-v>` / `<C-r>` | Cycle visibility / directory-project scope |
+| Picker `<C-j/k>` | Select next / previous |
+| Picker Enter or normal `;` | Open selection |
+| Picker `<C-q>` | Send results to quickfix |
+
+Every visibility/scope combination is also available through
+`:Search files|grep normal|hidden|all directory|project`. Prompts label both.
+Directory scope follows the editing file's directory or cwd on the dashboard;
+project widening never changes cwd. No-project fallback is labeled. All mode
+includes ignored files but excludes `.git` contents; symlinks are not followed.
+
+Tree `?` / `g?` shows its real mapping list. `a` creates, `r` renames, `<C-r>`
+renames a full path (move), `c/x/p` copy/cut/paste, `d` deletes with confirmation,
+`R` refreshes and `q` closes. Closing restores the previous editing window.
+Tree local clipboard keys are intentional UI operations. Which-key displays
+described shortcuts after 350 ms; the mapping timeout remains 500 ms.

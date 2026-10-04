@@ -10,13 +10,13 @@
 
 - [x] 2.1 Propose `rebuild-terminal-foundation` with `terminal-core` and `plugin-lifecycle` deltas, baseline/isolation tasks, setup prerequisites, and precise register/save/reload/wrap scenarios; verify complete artifacts and strict OpenSpec validation before apply.
 - [x] 2.2 Apply the foundation child, replacing the legacy runtime loader with modular core configuration, lazy.nvim, the theme, and a tested lockfile; verify Lua syntax, isolated headless/core behavior, first bootstrap and provisioned offline startup, and deliver its setup/mapping documentation.
-- [ ] 2.3 Finalize the foundation child only after its required checks pass: archive/sync deltas, commit intended files, and update the ledger; verify archive path, commit ID, recorded baseline measurements, and completed child tasks.
+- [x] 2.3 Finalize the foundation child only after its required checks pass: archive/sync deltas, commit intended files, and update the ledger; verify archive path, commit ID, recorded baseline measurements, and completed child tasks.
 
 ## 3. Navigation and dashboard increment
 
-- [ ] 3.1 Propose `rebuild-navigation-dashboard` with `workspace-navigation` scenarios for dashboard routing, consistent `e` tree keys, three visibility modes in both scopes, tree operations, buffers, and shortcut discovery; verify artifacts, fixture matrix, and strict validation.
-- [ ] 3.2 Apply navigation/dashboard with dashboard-nvim Hyper, Telescope, nvim-tree, Which-key, and the restrained statusline; verify real first-use actions, file/directory/stdin startup, search-result inclusion/exclusion, root/cwd behavior, tree focus/file operations, and publish its shortcut guide.
-- [ ] 3.3 Archive and commit the navigation child after acceptance, updating the ledger; verify completed tasks, archive/commit references, mapping audit, and attached-UI evidence or explicit blockers.
+- [x] 3.1 Propose `rebuild-navigation-dashboard` with `workspace-navigation` scenarios for dashboard routing, consistent `e` tree keys, three visibility modes in both scopes, tree operations, buffers, and shortcut discovery; verify artifacts, fixture matrix, and strict validation.
+- [x] 3.2 Apply navigation/dashboard with dashboard-nvim Hyper, Telescope, nvim-tree, Which-key, and the restrained statusline; verify real first-use actions, file/directory/stdin startup, search-result inclusion/exclusion, root/cwd behavior, tree focus/file operations, and publish its shortcut guide.
+- [x] 3.3 Archive and commit the navigation child after acceptance, updating the ledger; verify completed tasks, archive/commit references, mapping audit, and attached-UI evidence or explicit blockers.
 
 ## 4. Reading and editing increment
 

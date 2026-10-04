@@ -12,8 +12,8 @@ Branch: `rebuild/neovim-modernization`. Reference: `9746670fb9dc3640969151947b11
 
 | Phase | Change | Dependencies | Status | Archive | Commit | Evidence / blockers |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | rebuild-terminal-foundation | Approval | Archived; commit pending | 2026-10-04-rebuild-terminal-foundation | — | Core/lifecycle/offline/missing-manager checks passed; see archived evidence.md |
-| 2 | rebuild-navigation-dashboard | 1 | Pending | — | — | Not run |
+| 1 | rebuild-terminal-foundation | Approval | Complete | 2026-10-04-rebuild-terminal-foundation | f382bbd | Core/lifecycle/offline/missing-manager checks passed; see archived evidence.md |
+| 2 | rebuild-navigation-dashboard | 1 | Complete | 2026-10-04-rebuild-navigation-dashboard | Recorded in next checkpoint | Real search/tree and attached UI matrix passed; see archived evidence.md |
 | 3 | rebuild-reading-editing | 1, 2 | Pending | — | — | Not run |
 | 4 | rebuild-language-tooling | 1, 3 | Pending | — | — | Not run |
 | 5 | rebuild-project-formatting | 4 | Pending | — | — | Not run |
@@ -21,4 +21,4 @@ Branch: `rebuild/neovim-modernization`. Reference: `9746670fb9dc3640969151947b11
 | 7 | verify-portable-setup | 2–6 | Pending | — | — | Not run |
 | 8 | optimize-terminal-performance | 7 | Pending | — | — | Not run |
 
-Planning validation: strict OpenSpec validation passed before approval. Approved planning checkpoint: `60556a6`. Runtime has not yet been changed or tested as part of implementation.
+Planning validation: strict OpenSpec validation passed before approval. Approved planning checkpoint: `60556a6`. Phases 1–2 implemented and tested in isolation. Phase commits are created only after verified sync/archive; the next checkpoint records each actual prior commit.

@@ -30,6 +30,12 @@ tests/run.lua core` (the harness applies those paths and bounds test runtime).
 Do not share test state with your normal Neovim data. Additional language/parser
 dependencies are documented as their increments land.
 
+Navigation requires **ripgrep** (`brew install ripgrep` on macOS). Tree, picker,
+dashboard and statusline icons use an optional Nerd Font in your terminal.
+Attached UI checks use `tests/ui.py`: create an isolated Python venv, install
+`msgpack==1.2.3`, then run it with `DOTNEOVIM_TEST_HOME` set as above. This
+exercises an attached Neovim grid and input; terminal appearance checks are separate.
+
 ## Agent setup
 
 Repository-wide agent instructions live in the root [`AGENTS.md`](AGENTS.md); `CLAUDE.md` imports that file. Reusable skills live in [`.agents/skills/`](.agents/skills/), with `.claude/skills/` linking to that directory.

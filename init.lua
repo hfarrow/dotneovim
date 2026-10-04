@@ -8,4 +8,5 @@ vim.o.packpath = vim.env.VIMRUNTIME
 require('config.options')
 require('config.keymaps')
 require('config.autocmds')
+require('config.startup')
 require('config.lazy')
