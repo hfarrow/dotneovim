@@ -6,6 +6,8 @@ This repository contains personal Neovim and IdeaVim configuration. Treat it as 
 
 Use OpenSpec to define, plan, and implement substantive changes. Follow the repository-local `openspec-*` skills under `.agents/skills/` and the `spec-driven` schema in `openspec/config.yaml`. Keep requirements, design decisions, and implementation progress in the change artifacts so another agent can pick up the work without relying on conversation history.
 
+The CLI is pinned in `.agents/tools/`. Run `npm ci --prefix .agents/tools` if its dependencies are missing, then run `.agents/tools/node_modules/.bin/openspec` from the repository root. In the workflow and skills, `openspec` is shorthand for this local binary; use it rather than relying on a global installation or fetching the latest version with `npx`.
+
 1. **Find the current context.** Check active changes with `openspec list --json`, read relevant existing specs and change artifacts, and inspect the configuration the request touches. Continue the relevant change rather than creating a duplicate; ask when the intended change is ambiguous.
 2. **Define the outcome.** Use `openspec-explore` when goals, scope, or tradeoffs need discussion. Clarify decisions that materially affect behavior or acceptance criteria. Exploration does not authorize implementation.
 3. **Plan the change.** Use `openspec-propose` to create a named change with its proposal, capability delta specs, design where required, and actionable tasks. Use the CLI's status and artifact instructions to determine dependencies, templates, and paths. Specify observable behavior, acceptance scenarios, configuration/load-order decisions, setup requirements, and appropriate validation. Keep the plan detailed enough for a different agent to implement.

@@ -10,10 +10,18 @@ Repository-wide agent instructions live in the root [`AGENTS.md`](AGENTS.md); `C
 
 OpenSpec is the primary workflow for defining, planning, and implementing substantive changes. See `AGENTS.md` for the workflow and planning-to-implementation handoff. Specs are introduced with new work; existing configuration does not need retroactive specs or changes.
 
-OpenSpec is configured for the shared `.agents` skills target. To refresh the repository-local OpenSpec skills after upgrading the CLI, run:
+The OpenSpec CLI is pinned locally in `.agents/tools/` and requires Node.js 20.19.0 or newer and npm. Install the locked dependencies and invoke the CLI from the repository root:
 
 ```sh
-npx --yes @fission-ai/openspec@latest update
+npm ci --prefix .agents/tools
+.agents/tools/node_modules/.bin/openspec list --json
 ```
 
-This writes OpenSpec skills into `.agents/skills/`; it does not install skills into a home-directory location.
+The manifest and lockfile are tracked; installed `node_modules/` are ignored. To upgrade the CLI and refresh the repository-local skills, run:
+
+```sh
+npm install --prefix .agents/tools --save-dev --save-exact @fission-ai/openspec@latest
+.agents/tools/node_modules/.bin/openspec update
+```
+
+OpenSpec is configured for the shared `.agents` skills target, so `update` writes skills into `.agents/skills/`.
