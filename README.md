@@ -8,6 +8,8 @@
 
 Repository-wide agent instructions live in the root [`AGENTS.md`](AGENTS.md); `CLAUDE.md` imports that file. Reusable skills live in [`.agents/skills/`](.agents/skills/), with `.claude/skills/` linking to that directory.
 
+OpenSpec is the primary workflow for defining, planning, and implementing substantive changes. See `AGENTS.md` for the workflow and planning-to-implementation handoff. Specs are introduced with new work; existing configuration does not need retroactive specs or changes.
+
 OpenSpec is configured for the shared `.agents` skills target. To refresh the repository-local OpenSpec skills after upgrading the CLI, run:
 
 ```sh
