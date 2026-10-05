@@ -26,6 +26,7 @@ Read-only questions, Git operations, and small documentation or agent-instructio
 
 ## Working conventions
 
+- `main` is the bleeding-edge development branch and the target for new work. Do not default to `v2`; it is retained as historical configuration.
 - Read the affected configuration and its callers before changing it; Neovim configuration is loaded in a particular order.
 - Prefer current Neovim APIs and Lua over deprecated APIs or Vimscript when modernizing existing code.
 - Keep Lua formatting consistent with the existing files (two-space indentation and single quotes where practical).

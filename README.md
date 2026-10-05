@@ -1,4 +1,10 @@
 # dotneovim
+
+## Branches
+
+`main` is the bleeding-edge development branch. New development targets `main`;
+`v2` is retained as historical configuration, not the ongoing development line.
+
 ## Setup
 
 Requires **Neovim 0.12.5+** and Git. This configuration targets standalone terminal
